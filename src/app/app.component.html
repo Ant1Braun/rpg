@@ -1,21 +1,30 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
+  <mat-toolbar-row class="main-toolbar">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>dialpad</mat-icon>
-        <span>Redial</span>
+      <button mat-menu-item (click)="onRouteClicked(EPath.characterSheet)">
+        <mat-icon>border_color</mat-icon>
+        <span>{{ 'menu.character_sheet' | translate }}</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon>voicemail</mat-icon>
-        <span>Check voicemail</span>
+      <button mat-menu-item (click)="onRouteClicked(EPath.skillTreeBuilder)">
+        <mat-icon>account_tree</mat-icon>
+        <span>{{ 'menu.skill_tree_builder' | translate }}</span>
       </button>
-      <button mat-menu-item>
-        <mat-icon>notifications_off</mat-icon>
-        <span>Disable alerts</span>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="language">
+      <mat-icon>language</mat-icon>
+    </button>
+    <mat-menu #language="matMenu">
+      <button mat-menu-item (click)="translate.use(ELanguage.en)">
+        <span>{{ 'language.english' | translate }}</span>
+      </button>
+      <button mat-menu-item (click)="translate.use(ELanguage.fr)">
+        <span>{{ 'language.french' | translate }}</span>
       </button>
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
+<router-outlet></router-outlet>
