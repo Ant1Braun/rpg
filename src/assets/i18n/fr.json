@@ -1,0 +1,10 @@
+{
+    "menu": {
+        "character_sheet": "Feuille de caractère",
+        "skill_tree_builder": "Constructeur d'abre de talent"
+    },
+    "language": {
+        "english": "English",
+        "french": "Français"
+    }
+}

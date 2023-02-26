@@ -1,0 +1,10 @@
+{
+    "menu": {
+        "character_sheet": "Character sheet",
+        "skill_tree_builder": "Skill tree builder"
+    },
+    "language": {
+        "english": "English",
+        "french": "Français"
+    }
+}
