@@ -21,6 +21,7 @@ import { RoutingModule } from './routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
+    // Material icon list: https://jossef.github.io/material-design-icons-iconfont/
     MatIconModule,
     MatMenuModule,
     MatButtonModule,

@@ -1,28 +1,34 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row class="main-toolbar">
+  <mat-toolbar-row class="d-flex between">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onRouteClicked(EPath.skillBuilder)">
+        <mat-icon>playlist_add</mat-icon>
+        <span>{{ ('menu.' + EPath.skillBuilder) | translate }}</span>
+      </button>
       <button mat-menu-item (click)="onRouteClicked(EPath.characterSheet)">
         <mat-icon>border_color</mat-icon>
-        <span>{{ 'menu.character_sheet' | translate }}</span>
+        <span>{{ ('menu.' + EPath.characterSheet) | translate }}</span>
       </button>
       <button mat-menu-item (click)="onRouteClicked(EPath.skillTreeBuilder)">
         <mat-icon>account_tree</mat-icon>
-        <span>{{ 'menu.skill_tree_builder' | translate }}</span>
+        <span>{{ ('menu.' + EPath.skillTreeBuilder) | translate }}</span>
       </button>
     </mat-menu>
+
+    <h1 class="mb-0" *ngIf="currentUrl">{{ ('menu.' + currentUrl) | translate }}</h1>
 
     <button mat-icon-button [matMenuTriggerFor]="language">
       <mat-icon>language</mat-icon>
     </button>
     <mat-menu #language="matMenu">
       <button mat-menu-item (click)="translate.use(ELanguage.en)">
-        <span>{{ 'language.english' | translate }}</span>
+        <span>{{ ('language.' + ELanguage.en) | translate }}</span>
       </button>
       <button mat-menu-item (click)="translate.use(ELanguage.fr)">
-        <span>{{ 'language.french' | translate }}</span>
+        <span>{{ ('language.' + ELanguage.fr) | translate }}</span>
       </button>
     </mat-menu>
   </mat-toolbar-row>

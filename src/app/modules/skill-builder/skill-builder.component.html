@@ -1,0 +1,52 @@
+<div class="dark-background p-1">
+    <div class="d-flex between">
+        <button type="button" mat-raised-button (click)="fileInput.click()">
+            {{ 'skill_builder.import' | translate }}
+        </button>
+        <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
+    </div>
+
+    <form *ngIf="formGroup" [formGroup]="formGroup">
+        <div class="d-flex px-05" *ngFor="let skillGroup of skillGroups; let i = index" [formGroup]="skillGroup">
+            <div class="false-form-padding center mr-1">
+                <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <mat-form-field class="skill-name mr-1" *ngIf="skillGroup.get('name') as nameCtrl">
+                <mat-label>{{ 'skill_builder.label.name' | translate }}</mat-label>
+                <input matInput type="text" [formControlName]="'name'">
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <ng-container *ngIf="skillGroup.get('level') as levelCtrl">
+                <mat-form-field class="skill-level mr-1" appearance="fill">
+                    <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
+                    <input matInput type="number" [formControlName]="'level'">
+                </mat-form-field>
+                <div class="false-form-padding center">
+                    <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
+                        (click)="onChangeLevelClicked(levelCtrl, -1)">
+                        <mat-icon>remove_circle</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="accent" aria-label="Add level"
+                        (click)="onChangeLevelClicked(levelCtrl, 1)">
+                        <mat-icon>add_circle</mat-icon>
+                    </button>
+                </div>
+            </ng-container>
+            <!-- <mat-slider [min]="20" [max]="90" step="1">
+                <input matSliderThumb [formControlName]="'level'">
+            </mat-slider> -->
+        </div>
+
+        <div class="d-flex center">
+            <button mat-raised-button color="accent" (click)="onAddNewSkillClicked()">{{ 'skill_builder.add_new_skill' |
+                translate }}</button>
+        </div>
+    </form>
+</div>
