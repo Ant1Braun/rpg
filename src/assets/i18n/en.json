@@ -14,7 +14,7 @@
             "level": "Level"
         },
         "add_new_skill": "Add a new skill",
-        "import_csv": "Import a CSV file",
-        "export_csv": "Export a CSV file"
+        "import": "Import",
+        "export": "Export"
     }
 }

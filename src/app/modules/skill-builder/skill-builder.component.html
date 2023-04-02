@@ -1,11 +1,11 @@
 <div class="dark-background p-1">
     <div class="d-flex between">
         <button type="button" mat-raised-button (click)="fileInput.click()">
-            {{ 'skill_builder.import_csv' | translate }}
+            {{ 'skill_builder.import' | translate }}
         </button>
         <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
             accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-        <button mat-raised-button (click)="onExportCSVClicked()">{{ 'skill_builder.export_csv' | translate }}</button>
+        <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
     </div>
 
     <form *ngIf="formGroup" [formGroup]="formGroup">

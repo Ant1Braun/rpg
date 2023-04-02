@@ -153,7 +153,7 @@ export class SkillBuilderComponent implements OnInit {
     reader.readAsArrayBuffer(file);
   }
 
-  onExportCSVClicked(): void {
+  onExportClicked(): void {
     const headings = [[
       'name',
       'level'

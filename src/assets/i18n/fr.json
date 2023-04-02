@@ -13,6 +13,8 @@
             "name": "Nom",
             "level": "Niveau"
         },
-        "add_new_skill": "Ajouter une nouvelle compétence"
+        "add_new_skill": "Ajouter une nouvelle compétence",
+        "import": "Importer",
+        "export": "Exporter"
     }
 }
