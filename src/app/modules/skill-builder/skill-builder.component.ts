@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { read, utils, writeFile } from 'xlsx';
 import { Skill } from '../../interfaces';
 
 const defaultSkills: Skill[] = [
@@ -92,7 +93,7 @@ export class SkillBuilderComponent implements OnInit {
   skillList?: Skill[];
   formGroup?: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.skillList = defaultSkills;
@@ -100,7 +101,8 @@ export class SkillBuilderComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       skills: this.fb.array(formGroups)
-    })
+    });
+    (window as any).a = this.skillsArray
   }
 
   get skillsArray(): FormArray {
@@ -120,11 +122,48 @@ export class SkillBuilderComponent implements OnInit {
     });
   }
 
-  onImportCSVClicked(): void {
+  onFileSelected($event: any): void {
+    const files = $event.target.files;
+    if (!files?.length) {
+      return;
+    }
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const wb = read(event.target.result);
+      const sheets = wb.SheetNames;
 
+      if (sheets.length) {
+        const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
+        // this.movies = rows;
+        const newSkills: Skill[] = rows.map(row => {
+          return {
+            id: (row as any)?.id + '',
+            level: +(row as any)?.level,
+            max: +(row as any)?.max ?? 90,
+            min: +(row as any)?.min ?? 20,
+            name: (row as any)?.name + ''
+          }
+        });
+        this.skillsArray.clear();
+        this.getFormGroupsFromSkills(newSkills).forEach(group => this.skillsArray.push(group));
+        this.cdr.detectChanges();
+      }
+    }
+    reader.readAsArrayBuffer(file);
   }
 
   onExportCSVClicked(): void {
+    const headings = [[
+      'name',
+      'level'
+    ]];
+    const wb = utils.book_new();
+    const ws: any = utils.json_to_sheet([]);
+    utils.sheet_add_aoa(ws, headings);
+    utils.sheet_add_json(ws, this.skillsArray.value, { origin: 'A2', skipHeader: true });
+    utils.book_append_sheet(wb, ws, 'Report');
+    writeFile(wb, 'skills.xlsx');
   }
 
   onDeleteClicked(index: number): void {
