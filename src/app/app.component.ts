@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ELanguage, EPath } from './enums';
@@ -8,15 +8,17 @@ import { ELanguage, EPath } from './enums';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'rpg';
   ELanguage = ELanguage;
   EPath = EPath;
 
-  constructor(public translate: TranslateService, private router: Router) {
-    translate.setDefaultLang(ELanguage.en);
-    translate.addLangs([ELanguage.en, ELanguage.fr]);
-    translate.use(ELanguage.en);
+  constructor(public translate: TranslateService, private router: Router) { }
+
+  ngOnInit() {
+    this.translate.setDefaultLang(ELanguage.en);
+    this.translate.addLangs([ELanguage.en, ELanguage.fr]);
+    this.translate.use(ELanguage.en);
   }
 
   onRouteClicked(path: EPath): void {
