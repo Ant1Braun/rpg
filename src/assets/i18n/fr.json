@@ -1,11 +1,18 @@
 {
     "menu": {
-        "skill_builder": "Constructeur de talent",
-        "character_sheet": "Feuille de caractère",
-        "skill_tree_builder": "Constructeur d'abre de talent"
+        "skill-builder": "Constructeur de talent",
+        "character-sheet": "Feuille de caractère",
+        "skill-tree-builder": "Constructeur d'abre de talent"
     },
     "language": {
-        "english": "English",
-        "french": "Français"
+        "en": "English",
+        "fr": "Français"
+    },
+    "skill_builder": {
+        "label": {
+            "name": "Nom",
+            "level": "Niveau"
+        },
+        "add_new_skill": "Ajouter une nouvelle compétence"
     }
 }

@@ -1,11 +1,20 @@
 {
     "menu": {
-        "skill_builder": "Skill builder",
-        "character_sheet": "Character sheet",
-        "skill_tree_builder": "Skill tree builder"
+        "skill-builder": "Skill builder",
+        "character-sheet": "Character sheet",
+        "skill-tree-builder": "Skill tree builder"
     },
     "language": {
-        "english": "English",
-        "french": "Français"
+        "en": "English",
+        "fr": "Français"
+    },
+    "skill_builder": {
+        "label": {
+            "name": "Name",
+            "level": "Level"
+        },
+        "add_new_skill": "Add a new skill",
+        "import_csv": "Import a CSV file",
+        "export_csv": "Export a CSV file"
     }
 }
