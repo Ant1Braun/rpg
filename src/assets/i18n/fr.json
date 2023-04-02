@@ -1,5 +1,6 @@
 {
     "menu": {
+        "skill_builder": "Constructeur de talent",
         "character_sheet": "Feuille de caractère",
         "skill_tree_builder": "Constructeur d'abre de talent"
     },

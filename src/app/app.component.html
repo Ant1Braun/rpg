@@ -4,6 +4,10 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onRouteClicked(EPath.skillBuilder)">
+        <mat-icon>list</mat-icon>
+        <span>{{ 'menu.skill_builder' | translate }}</span>
+      </button>
       <button mat-menu-item (click)="onRouteClicked(EPath.characterSheet)">
         <mat-icon>border_color</mat-icon>
         <span>{{ 'menu.character_sheet' | translate }}</span>

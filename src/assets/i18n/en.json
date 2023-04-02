@@ -1,5 +1,6 @@
 {
     "menu": {
+        "skill_builder": "Skill builder",
         "character_sheet": "Character sheet",
         "skill_tree_builder": "Skill tree builder"
     },
