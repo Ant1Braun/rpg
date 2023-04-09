@@ -12,7 +12,8 @@
         "label": {
             "name": "Name",
             "level": "Level",
-            "file_name": "File name"
+            "file_name": "File name",
+            "experience": "Experience"
         },
         "add_new_skill": "Add a new skill",
         "import": "Import",

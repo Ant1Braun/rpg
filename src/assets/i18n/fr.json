@@ -12,7 +12,8 @@
         "label": {
             "name": "Nom",
             "level": "Niveau",
-            "file_name": "Nom du fichier"
+            "file_name": "Nom du fichier",
+            "experience": "Expérience"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",

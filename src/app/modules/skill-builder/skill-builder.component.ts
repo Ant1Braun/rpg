@@ -109,6 +109,10 @@ export class SkillBuilderComponent implements OnInit {
     return (this.formGroup?.get('skills') as FormArray);
   }
 
+  get experience(): number {
+    return this.skillsArray.value?.reduce((a: number, b: Skill) => a + b.level - 20, 0);
+  }
+
   get skillGroups(): FormGroup[] {
     return this.skillsArray?.controls as FormGroup[];
   }
@@ -160,8 +164,8 @@ export class SkillBuilderComponent implements OnInit {
 
   onExportClicked(): void {
     const headings = [[
-      'Name',
-      'Level'
+      'name',
+      'level'
     ]];
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
