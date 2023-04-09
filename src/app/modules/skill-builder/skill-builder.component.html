@@ -11,6 +11,9 @@
                 <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
                 <input matInput type="text" [formControlName]="'fileName'">
             </mat-form-field>
+
+            <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2>
+
             <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
         </div>
 
