@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { read, utils, writeFile } from 'xlsx';
 import { Skill } from '../../interfaces';
 
@@ -100,17 +100,25 @@ export class SkillBuilderComponent implements OnInit {
     const formGroups = this.getFormGroupsFromSkills(defaultSkills);
 
     this.formGroup = this.fb.group({
-      skills: this.fb.array(formGroups)
+      skills: this.fb.array(formGroups),
+      fileName: this.fb.control('')
     });
-    (window as any).a = this.skillsArray
   }
 
   get skillsArray(): FormArray {
     return (this.formGroup?.get('skills') as FormArray);
   }
 
+  get experience(): number {
+    return this.skillsArray.value?.reduce((a: number, b: Skill) => a + b.level - 20, 0);
+  }
+
   get skillGroups(): FormGroup[] {
     return this.skillsArray?.controls as FormGroup[];
+  }
+
+  get fileName(): FormControl {
+    return this.formGroup?.get('fileName') as FormControl;
   }
 
   private getFormGroupsFromSkills(skills: Skill[]): FormGroup[] {
@@ -122,20 +130,21 @@ export class SkillBuilderComponent implements OnInit {
     });
   }
 
-  onFileSelected($event: any): void {
-    const files = $event.target.files;
+  onFileSelected(event: any): void {
+    const files = event.target.files;
     if (!files?.length) {
       return;
     }
     const file = files[0];
+    const fileName = file.name?.split('.')?.shift();
+    this.fileName.setValue(fileName);
     const reader = new FileReader();
-    reader.onload = (event: any) => {
-      const wb = read(event.target.result);
+    reader.onload = (e: any) => {
+      const wb = read(e.target.result);
       const sheets = wb.SheetNames;
 
       if (sheets.length) {
         const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-        // this.movies = rows;
         const newSkills: Skill[] = rows.map(row => {
           return {
             id: (row as any)?.id + '',
@@ -163,7 +172,7 @@ export class SkillBuilderComponent implements OnInit {
     utils.sheet_add_aoa(ws, headings);
     utils.sheet_add_json(ws, this.skillsArray.value, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
-    writeFile(wb, 'skills.xlsx');
+    writeFile(wb, `${this.fileName.value ?? 'skills'}.xlsx`);
   }
 
   onDeleteClicked(index: number): void {
