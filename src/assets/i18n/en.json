@@ -11,7 +11,8 @@
     "skill_builder": {
         "label": {
             "name": "Name",
-            "level": "Level"
+            "level": "Level",
+            "file_name": "File name"
         },
         "add_new_skill": "Add a new skill",
         "import": "Import",

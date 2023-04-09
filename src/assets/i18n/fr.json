@@ -11,7 +11,8 @@
     "skill_builder": {
         "label": {
             "name": "Nom",
-            "level": "Niveau"
+            "level": "Niveau",
+            "file_name": "Nom du fichier"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",
