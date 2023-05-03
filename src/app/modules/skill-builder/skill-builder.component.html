@@ -1,73 +1,81 @@
-<div class="dark-background p-1 full-min-height">
-    <form *ngIf="formGroup" [formGroup]="formGroup">
-        <div class="d-flex between">
-            <button type="button" mat-raised-button (click)="fileInput.click()">
-                {{ 'skill_builder.import' | translate }}
-            </button>
-            <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-            
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
-                <input matInput type="text" [formControlName]="'fileName'">
-            </mat-form-field>
+<form *ngIf="formGroup" [formGroup]="formGroup">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2 class="white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-            <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2>
+            <div class="d-flex between">
+                <button type="button" mat-raised-button (click)="fileInput.click()">
+                    {{ 'skill_builder.import' | translate }}
+                </button>
+                <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
+                    <input matInput type="text" [formControlName]="'fileName'">
+                </mat-form-field>
 
-            <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
-        </div>
+                <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2>
 
-        <div class="d-flex px-05" *ngFor="let skillGroup of skillGroups; let i = index" [formGroup]="skillGroup">
-            <mat-accordion>
-                <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <div class="row d-flex between">
-                                <span>{{ nameCtrl.value }}</span>
-                                <span>{{ skillGroup.get('level')?.value }}</span>
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-form-field class="skill-name mr-1 row">
-                        <mat-label>{{ 'skill_builder.label.name' | translate }}</mat-label>
-                        <input matInput type="text" [formControlName]="'name'">
-                        <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <div class="row d-flex between" *ngIf="skillGroup.get('level') as levelCtrl">
-                        <mat-form-field class="skill-level mr-1" appearance="fill">
-                            <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
-                            <input matInput type="number" [formControlName]="'level'">
+                <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
+            </div>
+
+            <div class="d-flex px-05" *ngFor="let skillGroup of skillGroups; let i = index" [formGroup]="skillGroup">
+                <mat-accordion>
+                    <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="row d-flex between">
+                                    <span>{{ nameCtrl.value }}</span>
+                                    <span>{{ skillGroup.get('level')?.value }}</span>
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-form-field class="skill-name mr-1 row">
+                            <mat-label>{{ 'skill_builder.label.name' | translate }}</mat-label>
+                            <input matInput type="text" [formControlName]="'name'">
+                            <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
                         </mat-form-field>
-                        <div class="false-form-padding center">
-                            <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
-                                (click)="onChangeLevelClicked(levelCtrl, -1)">
-                                <mat-icon>remove_circle</mat-icon>
+                        <div class="row d-flex between" *ngIf="skillGroup.get('level') as levelCtrl">
+                            <mat-form-field class="skill-level mr-1" appearance="fill">
+                                <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
+                                <input matInput type="number" [formControlName]="'level'">
+                            </mat-form-field>
+                            <div class="false-form-padding center">
+                                <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
+                                    (click)="onChangeLevelClicked(levelCtrl, -1)">
+                                    <mat-icon>remove_circle</mat-icon>
+                                </button>
+                            </div>
+                            <div class="false-form-padding center">
+                                <button mat-mini-fab color="accent" aria-label="Add level"
+                                    (click)="onChangeLevelClicked(levelCtrl, 1)">
+                                    <mat-icon>add_circle</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row d-flex">
+                            <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
+                                <mat-icon>delete</mat-icon>
                             </button>
                         </div>
-                        <div class="false-form-padding center">
-                            <button mat-mini-fab color="accent" aria-label="Add level"
-                                (click)="onChangeLevelClicked(levelCtrl, 1)">
-                                <mat-icon>add_circle</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row d-flex">
-                        <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                    <!-- <mat-slider [min]="20" [max]="90" step="1">
-                        <input matSliderThumb [formControlName]="'level'">
-                    </mat-slider> -->
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+                        <!-- <mat-slider [min]="20" [max]="90" step="1">
+                            <input matSliderThumb [formControlName]="'level'">
+                        </mat-slider> -->
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
 
-        <div class="d-flex center">
-            <button mat-raised-button color="accent" (click)="onAddNewSkillClicked()">{{ 'skill_builder.add_new_skill' |
-                translate }}</button>
-        </div>
-    </form>
-</div>
+            <div class="d-flex center">
+                <button mat-raised-button color="accent" (click)="onAddNewSkillClicked()">{{ 'skill_builder.add_new_skill' |
+                    translate }}</button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</form>

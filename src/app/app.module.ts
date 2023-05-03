@@ -1,24 +1,33 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AppComponent } from './app.component';
+import { CharacterSheetComponent } from './modules/character-sheet/character-sheet.component';
+import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.component';
 import { RoutingModule } from './routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CharacterSheetComponent,
+    SkillBuilderComponent
   ],
   imports: [
     RoutingModule,
-    BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     // Material icon list: https://jossef.github.io/material-design-icons-iconfont/
@@ -32,7 +41,15 @@ import { RoutingModule } from './routing.module';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatDividerModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

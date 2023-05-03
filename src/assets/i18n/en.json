@@ -1,4 +1,7 @@
 {
+    "rpg": {
+        "helper": "RPG helper"
+    },
     "menu": {
         "skill-builder": "Skill builder",
         "character-sheet": "Character sheet",

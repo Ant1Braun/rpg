@@ -30,7 +30,7 @@ body {
 }
 
 .mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
 
 .mr-1 {
@@ -58,4 +58,16 @@ body {
 
 .false-form-padding {
     padding-bottom: 22px;
+}
+
+.full-min-height {
+    min-height: calc(100vh - 64px);
+}
+
+.bg-grey {
+    background-color: #303030;
+}
+
+.white {
+    color: white;
 }

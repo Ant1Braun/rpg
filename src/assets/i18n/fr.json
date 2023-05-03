@@ -1,4 +1,7 @@
 {
+    "rpg": {
+        "helper": "RPG helper"
+    },
     "menu": {
         "skill-builder": "Constructeur de talent",
         "character-sheet": "Feuille de caractère",

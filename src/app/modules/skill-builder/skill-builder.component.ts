@@ -84,7 +84,7 @@ const defaultSkills: Skill[] = [
 ];
 
 @Component({
-  selector: 'app-builder',
+  selector: 'app-skill-builder',
   templateUrl: './skill-builder.component.html',
   styleUrls: ['./skill-builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
