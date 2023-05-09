@@ -21,5 +21,15 @@
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",
         "export": "Exporter"
+    },
+    "dice_builder": {
+        "label": {
+            "name": "Nom",
+            "file_name": "Nom du fichier",
+            "add_new_face": "Ajouter une nouvelle face"
+        },
+        "add_new_dice": "Ajouter un nouveau dé",
+        "import": "Importer",
+        "export": "Exporter"
     }
 }

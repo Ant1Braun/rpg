@@ -17,6 +17,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { CharacterSheetComponent } from './modules/character-sheet/character-sheet.component';
+import { DiceBuilderComponent } from './modules/dice-builder/dice-builder.component';
+import { DiceComponent } from './modules/dice/dice.component';
 import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.component';
 import { RoutingModule } from './routing.module';
 
@@ -24,7 +26,9 @@ import { RoutingModule } from './routing.module';
   declarations: [
     AppComponent,
     CharacterSheetComponent,
-    SkillBuilderComponent
+    SkillBuilderComponent,
+    DiceComponent,
+    DiceBuilderComponent
   ],
   imports: [
     RoutingModule,
