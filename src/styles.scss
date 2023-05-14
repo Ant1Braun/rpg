@@ -133,6 +133,10 @@ body {
     align-items: center;
 }
 
+.wrap {
+    flex-wrap: wrap;
+}
+
 .false-form-padding {
     padding-bottom: 22px;
 }
@@ -145,7 +149,7 @@ body {
     background-color: #303030;
 }
 
-.white {
+.c-white {
     color: white;
 }
 
@@ -199,4 +203,8 @@ body {
 
 .border-t {
     border-top: solid;
+}
+
+.border-r {
+    border-right: solid;
 }
