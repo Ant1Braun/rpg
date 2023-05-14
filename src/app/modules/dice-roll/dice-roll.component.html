@@ -15,10 +15,11 @@
             </div>
         </div>
         <div class="column">
-            <div *ngIf="extraResults.length" class="border-b"></div>
-            <div *ngFor="let e of extraResults; let last = last">
-                <img *ngFor="let s of e.symbols" class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
-                <mat-divider *ngIf="!last" [vertical]="true"></mat-divider>
+            <div class="center" [ngClass]="{ 'border-t': extraResults.length }">
+                <div *ngFor="let e of extraResults; let last = last">
+                    <img *ngFor="let s of e.symbols" class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
+                    <mat-divider *ngIf="!last" [vertical]="true"></mat-divider>
+                </div>
             </div>
             <mat-accordion class="upward full-accordion-title-width">
                 <mat-expansion-panel hideToggle
