@@ -1,11 +1,12 @@
 import { EDiceColor, EDiceSymbol } from "../enums";
 
-export interface Dice {
-    name: string;
-    faces: Face[];
+export interface IDice {
     color?: EDiceColor;
+    faces: IFace[];
+    id: string;
+    name: string;
 }
 
-export interface Face {
+export interface IFace {
     symbols: EDiceSymbol[];
 }

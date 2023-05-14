@@ -1,4 +1,4 @@
-export interface Skill {
+export interface ISkill {
     id: string;
     name: string;
     level: number;

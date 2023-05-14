@@ -5,3 +5,10 @@
 .skill-level {
     width: 125px;
 }
+
+.skill-ctn {
+    width: calc(100vw - 72px);
+    mat-accordion {
+        width: 100%;
+    }
+}

@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { read, utils, writeFile } from 'xlsx';
-import { Skill } from '../../interfaces';
+import { IDicesByLebel, ISkill } from '../../interfaces';
+import { DiceRollComponent, SWGreenDice, SWYellowDice } from '../dice-roll/dice-roll.component';
 
-const defaultSkills: Skill[] = [
+const defaultSkills: ISkill[] = [
   {
     id: '0',
     level: 20,
@@ -82,6 +84,91 @@ const defaultSkills: Skill[] = [
     name: 'heavy ranged'
   }
 ];
+const defaultDicesByLevel: IDicesByLebel[] = [{
+  min: 0,
+  max: 9,
+  dices: [SWGreenDice]
+}, {
+  min: 10,
+  max: 19,
+  dices: [SWYellowDice]
+}, {
+  min: 20,
+  max: 29,
+  dices: [SWGreenDice, SWGreenDice]
+}, {
+  min: 30,
+  max: 39,
+  dices: [SWGreenDice, SWYellowDice]
+}, {
+  min: 40,
+  max: 49,
+  dices: [SWYellowDice, SWYellowDice]
+}, {
+  min: 50,
+  max: 59,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice]
+}, {
+  min: 60,
+  max: 69,
+  dices: [SWGreenDice, SWGreenDice, SWYellowDice]
+}, {
+  min: 70,
+  max: 79,
+  dices: [SWGreenDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 80,
+  max: 89,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice]
+}, {
+  min: 90,
+  max: 99,
+  dices: [SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 100,
+  max: 109,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice]
+}, {
+  min: 110,
+  max: 119,
+  dices: [SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 120,
+  max: 129,
+  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 130,
+  max: 139,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice]
+}, {
+  min: 140,
+  max: 149,
+  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 150,
+  max: 159,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice]
+}, {
+  min: 160,
+  max: 169,
+  dices: [SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 170,
+  max: 179,
+  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 180,
+  max: 189,
+  dices: [SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 190,
+  max: 199,
+  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}, {
+  min: 200,
+  max: 200,
+  dices: [SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+}];
 
 @Component({
   selector: 'app-skill-builder',
@@ -90,10 +177,14 @@ const defaultSkills: Skill[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillBuilderComponent implements OnInit {
-  skillList?: Skill[];
+  skillList?: ISkill[];
   formGroup?: FormGroup;
 
-  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.skillList = defaultSkills;
@@ -110,7 +201,7 @@ export class SkillBuilderComponent implements OnInit {
   }
 
   get experience(): number {
-    return this.skillsArray.value?.reduce((a: number, b: Skill) => a + b.level - 20, 0);
+    return this.skillsArray.value?.reduce((a: number, b: ISkill) => a + b.level - 20, 0);
   }
 
   get skillGroups(): FormGroup[] {
@@ -121,7 +212,7 @@ export class SkillBuilderComponent implements OnInit {
     return this.formGroup?.get('fileName') as FormControl;
   }
 
-  private getFormGroupsFromSkills(skills: Skill[]): FormGroup[] {
+  private getFormGroupsFromSkills(skills: ISkill[]): FormGroup[] {
     return skills.map(skill => {
       return this.fb.group({
         name: this.fb.control(skill.name),
@@ -145,12 +236,12 @@ export class SkillBuilderComponent implements OnInit {
 
       if (sheets.length) {
         const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-        const newSkills: Skill[] = rows.map(row => {
+        const newSkills: ISkill[] = rows.map(row => {
           return {
             id: (row as any)?.id + '',
             level: +(row as any)?.level,
-            max: +(row as any)?.max ?? 90,
-            min: +(row as any)?.min ?? 20,
+            max: +(row as any)?.max ?? 100,
+            min: +(row as any)?.min ?? 0,
             name: (row as any)?.name + ''
           }
         });
@@ -191,5 +282,15 @@ export class SkillBuilderComponent implements OnInit {
       name: this.fb.control(''),
       level: this.fb.control(20)
     }))
+  }
+
+  onRollDicesClicked(skillLevel: number): void {
+    const dices = defaultDicesByLevel.find(d => skillLevel <= d.max && skillLevel >= d.min)?.dices;
+    if (!dices) {
+      return;
+    }
+    this.dialog.open(DiceRollComponent, {
+      data: { dices }
+    });
   }
 }

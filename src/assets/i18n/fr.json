@@ -15,8 +15,10 @@
         "label": {
             "name": "Nom",
             "level": "Niveau",
+            "file": "Fichier",
             "file_name": "Nom du fichier",
-            "experience": "Expérience"
+            "experience": "Expérience",
+            "roll_dices": "Roll dices"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",
@@ -31,5 +33,10 @@
         "add_new_dice": "Ajouter un nouveau dé",
         "import": "Importer",
         "export": "Exporter"
+    },
+    "dice_roll": {
+        "result": "Résultat",
+        "add_dice": "Ajouter des dés",
+        "roll": "Lancer !"
     }
 }

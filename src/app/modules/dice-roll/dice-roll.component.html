@@ -1,0 +1,46 @@
+<div class="roll-ctn bg-light-gray p-1">
+    <div class="column between h-100">
+        <div>
+            <div class="d-flex between">
+                <h2>{{ 'dice_roll.result' | translate }}</h2>
+                <button mat-mini-fab color="primary" aria-label="Roll dices" (click)="rollDices()">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
+            <div class="center">
+                <div *ngFor="let r of results; let last = last">
+                    <img *ngFor="let s of r.symbols" class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
+                    <mat-divider *ngIf="!last" [vertical]="true"></mat-divider>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div *ngIf="extraResults.length" class="border-b"></div>
+            <div *ngFor="let e of extraResults; let last = last">
+                <img *ngFor="let s of e.symbols" class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
+                <mat-divider *ngIf="!last" [vertical]="true"></mat-divider>
+            </div>
+            <mat-accordion class="upward full-accordion-title-width">
+                <mat-expansion-panel hideToggle
+                    (opened)="panelOpenState = true"
+                    (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="d-flex between w-100">
+                                <h3>{{ 'dice_roll.add_dice' | translate }}</h3>
+                                <button *ngIf="panelOpenState" (click)="rollExtraDices()" mat-raised-button color="primary">{{ 'dice_roll.roll' | translate }}</button>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="d-flex between wrap">
+                        <ng-container *ngIf="panelOpenState">
+                            <button *ngFor="let d of defaultDices" [matBadge]="getExtraDiceNumberById(d.id)" [matBadgeHidden]="getExtraDiceNumberById(d.id) < 1" class="m-05" [ngClass]="d.color" mat-mini-fab aria-label="Add a dice" (click)="addCounterDice(d)">
+                                <img class="icon" src="assets/icons/dice.png" />
+                            </button>
+                        </ng-container>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

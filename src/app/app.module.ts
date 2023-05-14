@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,16 +20,17 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 import { CharacterSheetComponent } from './modules/character-sheet/character-sheet.component';
 import { DiceBuilderComponent } from './modules/dice-builder/dice-builder.component';
-import { DiceComponent } from './modules/dice/dice.component';
+import { DiceRollComponent } from './modules/dice-roll/dice-roll.component';
 import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.component';
 import { RoutingModule } from './routing.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CharacterSheetComponent,
     SkillBuilderComponent,
-    DiceComponent,
+    DiceRollComponent,
     DiceBuilderComponent
   ],
   imports: [
@@ -53,7 +56,9 @@ import { RoutingModule } from './routing.module';
     MatFormFieldModule,
     MatSliderModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule,
+    MatBadgeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

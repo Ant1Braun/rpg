@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { read, utils, writeFile } from 'xlsx';
-import { Dice } from '../../interfaces';
+import { IDice } from '../../interfaces';
 
-const defaultDices: Dice[] = [
+const defaultDices: IDice[] = [
 ];
 
 @Component({
@@ -13,7 +13,7 @@ const defaultDices: Dice[] = [
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiceBuilderComponent implements OnInit {
-  diceList?: Dice[];
+  diceList?: IDice[];
   formGroup?: FormGroup;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) { }
@@ -40,7 +40,7 @@ export class DiceBuilderComponent implements OnInit {
     return this.formGroup?.get('fileName') as FormControl;
   }
 
-  private getFormGroupsFromDices(dices: Dice[]): FormGroup[] {
+  private getFormGroupsFromDices(dices: IDice[]): FormGroup[] {
     return dices.map(dice => {
       return this.fb.group({
         level: this.fb.control(dice.name),
@@ -65,11 +65,12 @@ export class DiceBuilderComponent implements OnInit {
 
       if (sheets.length) {
         const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-        const newDices: Dice[] = rows.map(row => {
+        const newDices: IDice[] = rows.map(row => {
           return {
-            name: (row as any)?.name + '',
+            color: (row as any)?.color,
             faces: (row as any)?.faces,
-            color: (row as any)?.color
+            id: (row as any)?.id,
+            name: (row as any)?.name + ''
           }
         });
         this.dicesArray.clear();
