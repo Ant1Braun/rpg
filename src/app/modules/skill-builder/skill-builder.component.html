@@ -1,23 +1,33 @@
-<div class="dark-background p-1 full-min-height">
-    <form *ngIf="formGroup" [formGroup]="formGroup">
-        <div class="d-flex between">
-            <button type="button" mat-raised-button (click)="fileInput.click()">
-                {{ 'skill_builder.import' | translate }}
-            </button>
-            <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
-                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-            
-            <mat-form-field appearance="fill">
-                <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
-                <input matInput type="text" [formControlName]="'fileName'">
-            </mat-form-field>
+<form *ngIf="formGroup" [formGroup]="formGroup" class="p-05">
+    <h2 class="white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ 'skill_builder.label.file' | translate }} <ng-container *ngIf="formGroup.get('fileName')?.value as fileName">{{ fileName }}</ng-container>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-            <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2>
+            <div class="flex-ctn between">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
+                    <input matInput type="text" [formControlName]="'fileName'">
+                </mat-form-field>
+                <!-- <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2> -->
+                <button  class="mb-05" mat-raised-button (click)="fileInput.click()">
+                    {{ 'skill_builder.import' | translate }}
+                </button>
+                <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 
-            <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
-        </div>
+                <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
+            </div>
 
-        <div class="d-flex px-05" *ngFor="let skillGroup of skillGroups; let i = index" [formGroup]="skillGroup">
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="d-flex px-05 skill-ctn" [ngClass]="{ 'mt-1': first }" *ngFor="let skillGroup of skillGroups; let i = index; let first = first" [formGroup]="skillGroup">
+        <ng-container *ngIf="skillGroup.get('level') as levelCtrl">
             <mat-accordion>
                 <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
                     <mat-expansion-panel-header>
@@ -35,7 +45,7 @@
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
-                    <div class="row d-flex between" *ngIf="skillGroup.get('level') as levelCtrl">
+                    <div class="row d-flex between">
                         <mat-form-field class="skill-level mr-1" appearance="fill">
                             <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
                             <input matInput type="number" [formControlName]="'level'">
@@ -63,11 +73,17 @@
                     </mat-slider> -->
                 </mat-expansion-panel>
             </mat-accordion>
-        </div>
+            <div class="d-flex end">
+                <button mat-mini-fab class="ml-1 mb-4px theme-grey" aria-label="Roll dices" (click)="onRollDicesClicked(levelCtrl.value)">
+                    <img class="icon" src="assets/icons/dice.png" />
+                </button>
+            </div>
+        </ng-container>
+    </div>
 
-        <div class="d-flex center">
-            <button mat-raised-button color="accent" (click)="onAddNewSkillClicked()">{{ 'skill_builder.add_new_skill' |
-                translate }}</button>
-        </div>
-    </form>
-</div>
+    <div class="d-flex center">
+        <button mat-raised-button color="primary" (click)="onAddNewSkillClicked()">
+            {{ 'skill_builder.add_new_skill' | translate }}
+        </button>
+    </div>
+</form>

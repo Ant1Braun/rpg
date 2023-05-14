@@ -12,6 +12,10 @@ body {
     background-color: #303030;
 }
 
+.bg-light-gray {
+    background-color: lightgray;
+}
+
 .row {
     width: 100%;
     display: block;
@@ -19,6 +23,39 @@ body {
 
 .d-flex {
     display: flex;
+}
+
+.flex-ctn {
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 800px) {
+    .flex-ctn {
+      flex-direction: column;
+    }
+}
+
+.icon {
+    width: 26px;
+    padding-top: 4px;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.theme-grey {
+    background-color: #424242 !important;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
 }
 
 .around {
@@ -29,17 +66,53 @@ body {
     justify-content: space-between;
 }
 
+.wrap {
+    flex-wrap: wrap;
+}
+
+.bottom {
+    vertical-align: bottom;
+}
+
+.end {
+    align-items: end;
+}
+
 .mb-0 {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 1rem;
 }
 
 .mr-1 {
     margin-right: 1rem;
 }
 
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.mb-05 {
+    margin-bottom: 0.5rem;
+}
+
+.m-05 {
+    margin: 0.5rem;
+}
+
 .mx-05 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+.p-05 {
+    padding: 0.5rem;
 }
 
 .px-05 {
@@ -51,6 +124,10 @@ body {
     padding: 1rem;
 }
 
+.mb-4px {
+    margin-bottom: 4px !important;
+}
+
 .center {
     display: flex;
     align-items: center;
@@ -58,4 +135,68 @@ body {
 
 .false-form-padding {
     padding-bottom: 22px;
+}
+
+.full-min-height {
+    min-height: calc(100vh - 64px);
+}
+
+.bg-grey {
+    background-color: #303030;
+}
+
+.white {
+    color: white;
+}
+
+.upward {
+    .mat-expansion-panel {
+        display: flex !important;
+        flex-direction: column;
+    }
+    .mat-expansion-panel-header {
+        order: 2;
+    }
+    .mat-expansion-panel-body {
+        padding: 16px 24px 0;
+    }
+}
+
+.full-accordion-title-width {
+    .mat-content.mat-content-hide-toggle {
+        margin-right: 0;
+    }
+    .mat-expansion-panel-header-title {
+        margin-right: 0;
+    }
+}
+
+.black {
+    background-color: #212121 !important;
+}
+.blue {
+    background-color: #3c9bd6 !important;
+}
+.green {
+    background-color: #174a19 !important;
+}
+.purple {
+    background-color: #54096b !important;
+}
+.red {
+    background-color: #800d12 !important;
+}
+.white {
+    background-color: #424242 !important;
+}
+.yellow {
+    background-color: #bdb10b !important;
+}
+
+.border-b {
+    border-bottom: solid;
+}
+
+.border-t {
+    border-top: solid;
 }

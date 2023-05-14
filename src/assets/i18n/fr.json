@@ -1,4 +1,7 @@
 {
+    "rpg": {
+        "helper": "RPG helper"
+    },
     "menu": {
         "skill-builder": "Constructeur de talent",
         "character-sheet": "Feuille de caractère",
@@ -12,11 +15,28 @@
         "label": {
             "name": "Nom",
             "level": "Niveau",
+            "file": "Fichier",
             "file_name": "Nom du fichier",
-            "experience": "Expérience"
+            "experience": "Expérience",
+            "roll_dices": "Roll dices"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",
         "export": "Exporter"
+    },
+    "dice_builder": {
+        "label": {
+            "name": "Nom",
+            "file_name": "Nom du fichier",
+            "add_new_face": "Ajouter une nouvelle face"
+        },
+        "add_new_dice": "Ajouter un nouveau dé",
+        "import": "Importer",
+        "export": "Exporter"
+    },
+    "dice_roll": {
+        "result": "Résultat",
+        "add_dice": "Ajouter des dés",
+        "roll": "Lancer !"
     }
 }

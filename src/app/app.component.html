@@ -1,24 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row class="d-flex between">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onRouteClicked(EPath.skillBuilder)">
-        <mat-icon>playlist_add</mat-icon>
-        <span>{{ ('menu.' + EPath.skillBuilder) | translate }}</span>
-      </button>
-      <button mat-menu-item (click)="onRouteClicked(EPath.characterSheet)">
-        <mat-icon>border_color</mat-icon>
-        <span>{{ ('menu.' + EPath.characterSheet) | translate }}</span>
-      </button>
-      <button mat-menu-item (click)="onRouteClicked(EPath.skillTreeBuilder)">
-        <mat-icon>account_tree</mat-icon>
-        <span>{{ ('menu.' + EPath.skillTreeBuilder) | translate }}</span>
-      </button>
-    </mat-menu>
-
-    <h1 class="mb-0" *ngIf="currentUrl">{{ ('menu.' + currentUrl) | translate }}</h1>
+    <h1 class="mb-0">{{ 'rpg.helper' | translate }}</h1>
 
     <button mat-icon-button [matMenuTriggerFor]="language">
       <mat-icon>language</mat-icon>
@@ -33,4 +15,6 @@
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="full-min-height bg-grey">
+  <app-skill-builder></app-skill-builder>
+</div>
