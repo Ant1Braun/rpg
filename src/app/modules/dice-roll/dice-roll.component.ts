@@ -211,7 +211,11 @@ export class DiceRollComponent implements OnInit {
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
-    return dices.map(dice => dice.faces[Math.floor(Math.random() * dice.faces.length)]);
+    return dices.map(dice => {
+      const face = dice.faces[Math.floor(Math.random() * dice.faces.length)];
+      face.color = dice.color;
+      return face;
+    });
   }
 
   addCounterDice(d: IDice): void {

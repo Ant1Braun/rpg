@@ -7,7 +7,7 @@
 }
 
 .skill-ctn {
-    width: calc(100vw - 72px);
+    max-width: calc(100vw - 72px);
     mat-accordion {
         width: 100%;
     }

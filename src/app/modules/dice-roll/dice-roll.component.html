@@ -8,9 +8,12 @@
                 </button>
             </div>
             <div class="center wrap">
-                <div *ngFor="let r of results; let last = last" class="center h-100 mb-05" [ngClass]="{ 'border-r': !last }">
-                    <div class="center h-100" *ngFor="let s of r.symbols">
+                <div *ngFor="let r of results" class="center h-100 m-025 radius">
+                    <div class="center" [className]="r.color" *ngFor="let s of r.symbols">
                         <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
+                    </div>
+                    <div class="center" [className]="r.color" *ngIf="!r.symbols.length">
+                        <div class="square"></div>
                     </div>
                 </div>
             </div>
@@ -18,9 +21,12 @@
         <div class="column">
             <div>
                 <div class="center wrap" [ngClass]="{ 'border-t': extraResults.length }">
-                    <div *ngFor="let e of extraResults; let last = last" class="center h-100" [ngClass]="{ 'border-r': !last }">
-                        <div class="center h-100" *ngFor="let s of e.symbols">
+                    <div *ngFor="let e of extraResults" class="center h-100 m-025 radius">
+                        <div class="center" [className]="e.color" *ngFor="let s of e.symbols">
                             <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
+                        </div>
+                        <div class="center" [className]="e.color" *ngIf="!e.symbols.length">
+                            <div class="square"></div>
                         </div>
                     </div>
                 </div>

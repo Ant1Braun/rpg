@@ -9,4 +9,5 @@ export interface IDice {
 
 export interface IFace {
     symbols: EDiceSymbol[];
+    color?: EDiceColor;
 }
