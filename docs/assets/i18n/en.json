@@ -1,8 +1,12 @@
 {
+    "rpg": {
+        "helper": "RPG helper"
+    },
     "menu": {
         "skill-builder": "Skill builder",
         "character-sheet": "Character sheet",
-        "skill-tree-builder": "Skill tree builder"
+        "skill-tree-builder": "Skill tree builder",
+        "dice-builder": "Dice builder"
     },
     "language": {
         "en": "English",
@@ -12,11 +16,28 @@
         "label": {
             "name": "Name",
             "level": "Level",
+            "file": "File",
             "file_name": "File name",
-            "experience": "Experience"
+            "experience": "Experience",
+            "roll_dices": "Roll dices"
         },
         "add_new_skill": "Add a new skill",
         "import": "Import",
         "export": "Export"
+    },
+    "dice_builder": {
+        "label": {
+            "name": "Name",
+            "file_name": "File name",
+            "add_new_face": "Add a new face"
+        },
+        "add_new_dice": "Add a new dice",
+        "import": "Import",
+        "export": "Export"
+    },
+    "dice_roll": {
+        "result": "Result",
+        "add_dice": "Add dice",
+        "roll": "Roll!"
     }
 }
