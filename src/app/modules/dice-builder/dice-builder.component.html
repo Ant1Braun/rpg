@@ -1,0 +1,62 @@
+<form *ngIf="formGroup" [formGroup]="formGroup">
+    <mat-accordion>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h2 class="white mb-0">{{ 'menu.dice-builder' | translate }}</h2>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="d-flex between">
+                <button type="button" mat-raised-button (click)="fileInput.click()">
+                    {{ 'dice_builder.import' | translate }}
+                </button>
+                <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ 'dice_builder.label.file_name' | translate }}</mat-label>
+                    <input matInput type="text" [formControlName]="'fileName'">
+                </mat-form-field>
+
+                <button mat-raised-button (click)="onExportClicked()">{{ 'dice_builder.export' | translate }}</button>
+            </div>
+
+            <div class="d-flex px-05" *ngFor="let diceGroup of diceGroups; let i = index" [formGroup]="diceGroup">
+                <mat-accordion>
+                    <mat-expansion-panel hideToggle *ngIf="diceGroup.get('name') as nameCtrl">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <div class="row d-flex between">
+                                    <span>{{ nameCtrl.value }}</span>
+                                </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-form-field class="dice-name mr-1 row">
+                            <mat-label>{{ 'dice_builder.label.name' | translate }}</mat-label>
+                            <input matInput type="text" [formControlName]="'name'">
+                            <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <h3>{{ 'dice_builder.label.add_new_face' | translate }}</h3>
+                        <div class="row d-flex between" *ngIf="diceGroup.get('faces') as facesArray">
+                            <span>arr</span>
+                        </div>
+                        <div class="row d-flex">
+                            <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="d-flex center">
+                <button mat-raised-button color="accent" (click)="onAddNewDiceClicked()">
+                    {{ 'dice_builder.add_new_dice' | translate }}
+                </button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</form>

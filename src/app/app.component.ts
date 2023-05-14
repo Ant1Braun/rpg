@@ -1,45 +1,30 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, first, Subject, takeUntil } from 'rxjs';
-import { ELanguage, EPath } from './enums';
+import { ELanguage } from './enums';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'rpg';
+export class AppComponent implements OnInit {
   ELanguage = ELanguage;
-  EPath = EPath;
-  currentUrl?: string;
-  private destroy$ = new Subject<boolean>();
 
   constructor(
     public translate: TranslateService,
-    private router: Router
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
     this.translate.setDefaultLang(ELanguage.en);
     this.translate.addLangs([ELanguage.en, ELanguage.fr]);
     this.translate.use(ELanguage.en);
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      takeUntil(this.destroy$)
-    ).subscribe((event) => {
-      const url = (event as NavigationEnd).url;
-      this.currentUrl = url.substring(1, url.length);
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-  }
-
-  onRouteClicked(path: EPath): void {
-    this.router.navigate([path]);
+    this.matIconRegistry.addSvgIcon(
+      'dice',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/dice.svg')
+    );
   }
 }
