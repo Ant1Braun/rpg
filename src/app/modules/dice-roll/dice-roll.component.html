@@ -9,7 +9,7 @@
             </div>
             <div class="center wrap">
                 <div *ngFor="let r of results" class="center h-100 m-025 radius">
-                    <div class="center" [className]="r.color" *ngFor="let s of r.symbols">
+                    <div class="center h-50px" [ngClass]="getColorClass(r.color)" *ngFor="let s of r.symbols">
                         <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
                     </div>
                     <div class="center" [className]="r.color" *ngIf="!r.symbols.length">
@@ -22,7 +22,7 @@
             <div>
                 <div class="center wrap" [ngClass]="{ 'border-t': extraResults.length }">
                     <div *ngFor="let e of extraResults" class="center h-100 m-025 radius">
-                        <div class="center" [className]="e.color" *ngFor="let s of e.symbols">
+                        <div class="center h-50px" [ngClass]="getColorClass(e.color)" *ngFor="let s of e.symbols">
                             <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
                         </div>
                         <div class="center" [className]="e.color" *ngIf="!e.symbols.length">

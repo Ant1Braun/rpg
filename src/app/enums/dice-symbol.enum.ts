@@ -1,10 +1,10 @@
 export enum EDiceSymbol {
     advantage = 'advantage',
-    dark = 'dark',
-    despair = 'despair',
-    light = 'light',
-    failure = 'failure',
+    anti_critical = 'anti_critical',
+    critical = 'critical',
+    disadvantage = 'disadvantage',
+    fail = 'fail',
+    negative = 'negative',
+    positive = 'positive',
     success = 'success',
-    threat = 'threat',
-    triumph = 'triumph'
 }

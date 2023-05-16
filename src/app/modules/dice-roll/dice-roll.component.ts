@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EDiceColor, EDiceSymbol } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
 
-export const SWBlueDice: IDice = {
+export const BlueDice: IDice = {
   color: EDiceColor.blue,
   faces: [{
     symbols: []
@@ -17,31 +17,29 @@ export const SWBlueDice: IDice = {
     symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
   }, {
     symbols: [EDiceSymbol.advantage, EDiceSymbol.success]
-  }
-],
-id: '0',
-name: 'SW Blue dice'
+  }],
+  id: '0',
+  name: 'Blue dice'
 };
-export const SWBlackDice: IDice = {
+export const BlackDice: IDice = {
   color: EDiceColor.black,
   faces: [{
     symbols: []
   }, {
     symbols: []
   }, {
-    symbols: [EDiceSymbol.failure]
+    symbols: [EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.failure]
+    symbols: [EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.threat]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.threat]
-  }
-],
-id: '1',
-name: 'SW Black dice'
+    symbols: [EDiceSymbol.disadvantage]
+  }],
+  id: '1',
+  name: 'Black dice'
 };
-export const SWGreenDice: IDice = {
+export const GreenDice: IDice = {
   color: EDiceColor.green,
   faces: [{
     symbols: []
@@ -59,17 +57,16 @@ export const SWGreenDice: IDice = {
     symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
   }, {
     symbols: [EDiceSymbol.success, EDiceSymbol.success]
-  }
-],
-id: '2',
-name: 'SW Green dice'
+  }],
+  id: '2',
+  name: 'Green dice'
 };
-export const SWYellowDice: IDice = {
+export const YellowDice: IDice = {
   color: EDiceColor.yellow,
   faces: [{
     symbols: []
   }, {
-    symbols: [EDiceSymbol.triumph]
+    symbols: [EDiceSymbol.critical]
   }, {
     symbols: [EDiceSymbol.success]
   }, {
@@ -90,95 +87,99 @@ export const SWYellowDice: IDice = {
     symbols: [EDiceSymbol.success, EDiceSymbol.success]
   }, {
     symbols: [EDiceSymbol.success, EDiceSymbol.success]
-  }
-],
-id: '3',
-name: 'SW Yellow dice'
+  }],
+  id: '3',
+  name: 'Yellow dice'
 };
-export const SWPurpleDice: IDice = {
-  color: EDiceColor.purple,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.failure]
-  }, {
-    symbols: [EDiceSymbol.threat]
-  }, {
-    symbols: [EDiceSymbol.threat]
-  }, {
-    symbols: [EDiceSymbol.threat]
-  }, {
-    symbols: [EDiceSymbol.failure, EDiceSymbol.failure]
-  }, {
-    symbols: [EDiceSymbol.failure, EDiceSymbol.threat]
-  }, {
-    symbols: [EDiceSymbol.threat, EDiceSymbol.threat]
-  }
-],
-id: '4',
-name: 'SW Purple dice'
-};
-export const SWRedDice: IDice = {
+export const RedDice: IDice = {
   color: EDiceColor.red,
   faces: [{
     symbols: []
   }, {
-    symbols: [EDiceSymbol.failure]
+    symbols: [EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.threat]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.threat]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.threat]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.failure, EDiceSymbol.failure]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.failure, EDiceSymbol.threat]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.threat, EDiceSymbol.threat]
-  }
-],
-id: '5',
-name: 'SW Red dice'
+    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
+  }],
+  id: '4',
+  name: 'Red dice'
 };
-export const SWWhiteDice: IDice = {
-  color: EDiceColor.white,
+export const PurpleDice: IDice = {
+  color: EDiceColor.purple,
   faces: [{
-    symbols: [EDiceSymbol.dark]
+    symbols: []
   }, {
-    symbols: [EDiceSymbol.dark]
+    symbols: [EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.dark]
+    symbols: [EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.dark]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.dark]
+    symbols: [EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.dark, EDiceSymbol.dark]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.light]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
   }, {
-    symbols: [EDiceSymbol.light]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.light, EDiceSymbol.light]
+    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.light, EDiceSymbol.light]
+    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
   }, {
-    symbols: [EDiceSymbol.light, EDiceSymbol.light]
-  }
-],
-id: '6',
-name: 'SW White dice'
+    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
+  }, {
+    symbols: [EDiceSymbol.anti_critical]
+  }],
+  id: '5',
+  name: 'Purple dice'
+};
+export const OrangeDice: IDice = {
+  color: EDiceColor.orange,
+  faces: [{
+    symbols: [EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.negative, EDiceSymbol.negative]
+  }, {
+    symbols: [EDiceSymbol.positive]
+  }, {
+    symbols: [EDiceSymbol.positive]
+  }, {
+    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
+  }, {
+    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
+  }, {
+    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
+  }],
+  id: '6',
+  name: 'Orange dice'
 };
 
-const defaultSWDices: IDice[] = [
-  SWBlueDice,
-  SWBlackDice,
-  SWGreenDice,
-  SWYellowDice,
-  SWPurpleDice,
-  SWRedDice,
-  SWWhiteDice
+const defaultDices: IDice[] = [
+  BlackDice,
+  RedDice,
+  PurpleDice,
+  BlueDice,
+  GreenDice,
+  YellowDice,
+  OrangeDice
 ];
 
 @Component({
@@ -191,13 +192,20 @@ export class DiceRollComponent implements OnInit {
   results?: IFace[];
   extraDices: IDice[] = [];
   extraResults: IFace[] = [];
-  defaultDices = defaultSWDices;
+  defaultDices = defaultDices;
   panelOpenState = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }) { }
 
   ngOnInit() {
     this.rollDices();
+  }
+
+  getColorClass(color?: EDiceColor): { [key in EDiceColor]?: boolean } | undefined {
+    if (!color) {
+      return;
+    }
+    return { [color]: true };
   }
 
   getExtraDiceNumberById(id: string): number {

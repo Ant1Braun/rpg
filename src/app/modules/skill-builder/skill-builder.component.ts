@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from 
 import { MatDialog } from '@angular/material/dialog';
 import { read, utils, writeFile } from 'xlsx';
 import { IDicesByLebel, ISkill } from '../../interfaces';
-import { DiceRollComponent, SWGreenDice, SWYellowDice } from '../dice-roll/dice-roll.component';
+import { DiceRollComponent, GreenDice, YellowDice } from '../dice-roll/dice-roll.component';
 
 const defaultSkills: ISkill[] = [
   {
@@ -87,87 +87,87 @@ const defaultSkills: ISkill[] = [
 const defaultDicesByLevel: IDicesByLebel[] = [{
   min: 0,
   max: 9,
-  dices: [SWGreenDice]
+  dices: [GreenDice]
 }, {
   min: 10,
   max: 19,
-  dices: [SWYellowDice]
+  dices: [YellowDice]
 }, {
   min: 20,
   max: 29,
-  dices: [SWGreenDice, SWGreenDice]
+  dices: [GreenDice, GreenDice]
 }, {
   min: 30,
   max: 39,
-  dices: [SWGreenDice, SWYellowDice]
+  dices: [GreenDice, YellowDice]
 }, {
   min: 40,
   max: 49,
-  dices: [SWYellowDice, SWYellowDice]
+  dices: [YellowDice, YellowDice]
 }, {
   min: 50,
   max: 59,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice]
+  dices: [GreenDice, GreenDice, GreenDice]
 }, {
   min: 60,
   max: 69,
-  dices: [SWGreenDice, SWGreenDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, YellowDice]
 }, {
   min: 70,
   max: 79,
-  dices: [SWGreenDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, YellowDice, YellowDice]
 }, {
   min: 80,
   max: 89,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice]
+  dices: [GreenDice, GreenDice, GreenDice, GreenDice]
 }, {
   min: 90,
   max: 99,
-  dices: [SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [YellowDice, YellowDice, YellowDice]
 }, {
   min: 100,
   max: 109,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, GreenDice, YellowDice]
 }, {
   min: 110,
   max: 119,
-  dices: [SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, YellowDice, YellowDice]
 }, {
   min: 120,
   max: 129,
-  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, YellowDice, YellowDice, YellowDice]
 }, {
   min: 130,
   max: 139,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice]
+  dices: [GreenDice, GreenDice, GreenDice, GreenDice, GreenDice]
 }, {
   min: 140,
   max: 149,
-  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, YellowDice, YellowDice, YellowDice]
 }, {
   min: 150,
   max: 159,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, GreenDice, GreenDice, YellowDice]
 }, {
   min: 160,
   max: 169,
-  dices: [SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [YellowDice, YellowDice, YellowDice, YellowDice]
 }, {
   min: 170,
   max: 179,
-  dices: [SWGreenDice, SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, GreenDice, YellowDice, YellowDice]
 }, {
   min: 180,
   max: 189,
-  dices: [SWGreenDice, SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, GreenDice, YellowDice, YellowDice, YellowDice]
 }, {
   min: 190,
   max: 199,
-  dices: [SWGreenDice, SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [GreenDice, YellowDice, YellowDice, YellowDice, YellowDice]
 }, {
   min: 200,
   max: 200,
-  dices: [SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice, SWYellowDice]
+  dices: [YellowDice, YellowDice, YellowDice, YellowDice, YellowDice]
 }];
 
 @Component({
