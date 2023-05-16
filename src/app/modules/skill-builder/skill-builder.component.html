@@ -1,10 +1,10 @@
-<form *ngIf="formGroup" [formGroup]="formGroup" class="p-05 max-w-500 m-a">
+<form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
     <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ 'skill_builder.label.file' | translate }} <ng-container *ngIf="formGroup.get('fileName')?.value as fileName">{{ fileName }}</ng-container>
+                    {{ 'skill_builder.label.file' | translate }} <ng-container *ngIf="form.get('fileName')?.value as fileName">{{ fileName }}</ng-container>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 

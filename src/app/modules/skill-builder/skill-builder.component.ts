@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { read, utils, writeFile } from 'xlsx';
@@ -178,7 +178,13 @@ const defaultDicesByLevel: IDicesByLebel[] = [{
 })
 export class SkillBuilderComponent implements OnInit {
   skillList?: ISkill[];
-  formGroup?: FormGroup;
+  form?: FormGroup;
+  @HostListener('window:beforeunload', ['event'])
+  do(event: any) {
+    if (this.form?.dirty) {
+      event.returnValue = '';
+    }
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -190,14 +196,14 @@ export class SkillBuilderComponent implements OnInit {
     this.skillList = defaultSkills;
     const formGroups = this.getFormGroupsFromSkills(defaultSkills);
 
-    this.formGroup = this.fb.group({
+    this.form = this.fb.group({
       skills: this.fb.array(formGroups),
       fileName: this.fb.control('')
     });
   }
 
   get skillsArray(): FormArray {
-    return (this.formGroup?.get('skills') as FormArray);
+    return (this.form?.get('skills') as FormArray);
   }
 
   get experience(): number {
@@ -209,7 +215,7 @@ export class SkillBuilderComponent implements OnInit {
   }
 
   get fileName(): FormControl {
-    return this.formGroup?.get('fileName') as FormControl;
+    return this.form?.get('fileName') as FormControl;
   }
 
   private getFormGroupsFromSkills(skills: ISkill[]): FormGroup[] {
@@ -275,6 +281,9 @@ export class SkillBuilderComponent implements OnInit {
       return;
     }
     control.setValue(control.value + change);
+    if (control.pristine) {
+      control.markAsDirty();
+    }
   }
 
   onAddNewSkillClicked(): void {
