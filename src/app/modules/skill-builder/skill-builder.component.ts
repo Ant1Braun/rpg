@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
 import { IDicesByLebel, ISkill } from '../../interfaces';
 import { DiceRollComponent, GreenDice, YellowDice } from '../dice-roll/dice-roll.component';
@@ -176,15 +177,18 @@ const defaultDicesByLevel: IDicesByLebel[] = [{
   styleUrls: ['./skill-builder.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkillBuilderComponent implements OnInit {
+export class SkillBuilderComponent implements OnInit, OnDestroy {
   skillList?: ISkill[];
   form?: FormGroup;
   @HostListener('window:beforeunload', ['event'])
   do(event: any) {
-    if (this.form?.dirty) {
+    if (this.unsaved) {
       event.returnValue = '';
     }
   }
+
+  private unsaved = false;
+  private destroyed$ = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
@@ -200,6 +204,14 @@ export class SkillBuilderComponent implements OnInit {
       skills: this.fb.array(formGroups),
       fileName: this.fb.control('')
     });
+    this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(() => {
+      this.unsaved = true;
+    })
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next(true);
+    this.destroyed$.complete();
   }
 
   get skillsArray(): FormArray {
@@ -269,7 +281,9 @@ export class SkillBuilderComponent implements OnInit {
     utils.sheet_add_aoa(ws, headings);
     utils.sheet_add_json(ws, this.skillsArray.value, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
-    writeFile(wb, `${this.fileName.value ?? 'skills'}.xlsx`);
+    writeFile(wb, `${this.fileName.value || 'skills'}.xlsx`);
+    this.unsaved = false;
+    this.form?.markAsPristine();
   }
 
   onDeleteClicked(index: number): void {
