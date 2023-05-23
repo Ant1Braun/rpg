@@ -38,6 +38,7 @@
     "dice_roll": {
         "result": "Result",
         "add_dice": "Add dice",
-        "roll": "Roll!"
+        "roll": "Roll!",
+        "reroll": "Reroll"
     }
 }
