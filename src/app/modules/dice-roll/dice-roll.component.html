@@ -1,14 +1,22 @@
 <div class="roll-ctn bg-light-gray p-1">
     <div class="column between h-100">
-        <div>
-            <div class="d-flex between">
-                <h2>{{ 'dice_roll.result' | translate }}</h2>
-                <button mat-mini-fab color="primary" aria-label="Roll dices" (click)="rollDices()">
-                    <mat-icon>refresh</mat-icon>
+        <ng-container *ngIf="!results; else resultsTmp">
+            <div class="d-flex between wrap">
+                <button *ngFor="let d of defaultDices" [matBadge]="getDiceNumberById(d.id)"
+                    [matBadgeHidden]="getDiceNumberById(d.id) < 1" class="m-05" [ngClass]="d.color" mat-mini-fab
+                    aria-label="Add a dice" (click)="addCounterDice(d)">
+                    <img class="icon" src="assets/icons/dice.png" />
                 </button>
             </div>
+            <div class="d-flex content-center roll-btn-ctn">
+                <button (click)="rollDices()" class="mt-1 roll-btn" mat-raised-button color="primary">
+                    {{ 'dice_roll.roll' | translate }}
+                </button>
+            </div>
+        </ng-container>
+        <ng-template #resultsTmp>
             <div class="center wrap">
-                <div *ngFor="let r of results" class="center h-100 m-025 radius">
+                <div *ngFor="let r of results" class="center m-025 radius">
                     <div class="center h-50px" [ngClass]="getColorClass(r.color)" *ngFor="let s of r.symbols">
                         <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
                     </div>
@@ -17,41 +25,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="column">
-            <div>
-                <div class="center wrap" [ngClass]="{ 'border-t': extraResults.length }">
-                    <div *ngFor="let e of extraResults" class="center h-100 m-025 radius">
-                        <div class="center h-50px" [ngClass]="getColorClass(e.color)" *ngFor="let s of e.symbols">
-                            <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
-                        </div>
-                        <div class="center" [className]="e.color" *ngIf="!e.symbols.length">
-                            <div class="square"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <mat-accordion class="upward full-accordion-title-width">
-                <mat-expansion-panel hideToggle
-                    (opened)="panelOpenState = true"
-                    (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <div class="d-flex between w-100">
-                                <h3>{{ 'dice_roll.add_dice' | translate }}</h3>
-                                <button *ngIf="panelOpenState" (click)="rollExtraDices()" mat-raised-button color="primary">{{ 'dice_roll.roll' | translate }}</button>
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="d-flex between wrap">
-                        <ng-container *ngIf="panelOpenState">
-                            <button *ngFor="let d of defaultDices" [matBadge]="getExtraDiceNumberById(d.id)" [matBadgeHidden]="getExtraDiceNumberById(d.id) < 1" class="m-05" [ngClass]="d.color" mat-mini-fab aria-label="Add a dice" (click)="addCounterDice(d)">
-                                <img class="icon" src="assets/icons/dice.png" />
-                            </button>
-                        </ng-container>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </div>
+            <button (click)="rerollDices()" mat-raised-button color="primary">
+                {{ 'dice_roll.reroll' | translate }}
+            </button>
+        </ng-template>
     </div>
 </div>

@@ -190,15 +190,14 @@ const defaultDices: IDice[] = [
 })
 export class DiceRollComponent implements OnInit {
   results?: IFace[];
-  extraDices: IDice[] = [];
-  extraResults: IFace[] = [];
+  dices: IDice[] = [];
   defaultDices = defaultDices;
-  panelOpenState = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }) { }
 
   ngOnInit() {
-    this.rollDices();
+    (window as any).a = this;
+    this.setDefaultDices();
   }
 
   getColorClass(color?: EDiceColor): { [key in EDiceColor]?: boolean } | undefined {
@@ -208,14 +207,12 @@ export class DiceRollComponent implements OnInit {
     return { [color]: true };
   }
 
-  getExtraDiceNumberById(id: string): number {
-    return this.extraDices.filter(e => e.id === id).length;
+  getDiceNumberById(id: string): number {
+    return this.dices.filter(e => e.id === id).length;
   }
 
   rollDices(): void {
-    this.results = this.getRandomFaces(this.data.dices);
-    this.extraDices = [];
-    this.extraResults = [];
+    this.results = this.getRandomFaces(this.dices);
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
@@ -227,10 +224,15 @@ export class DiceRollComponent implements OnInit {
   }
 
   addCounterDice(d: IDice): void {
-    this.extraDices.push(d);
+    this.dices.push(d);
   }
 
-  rollExtraDices(): void {
-    this.extraResults = this.getRandomFaces(this.extraDices);
+  rerollDices() {
+    this.results = undefined;
+    this.setDefaultDices();
+  }
+
+  private setDefaultDices(): void {
+    this.dices = [...this.data.dices];
   }
 }
