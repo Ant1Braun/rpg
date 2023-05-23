@@ -5,6 +5,7 @@ export interface IDice {
     faces: IFace[];
     id: string;
     name: string;
+    order: number;
 }
 
 export interface IFace {

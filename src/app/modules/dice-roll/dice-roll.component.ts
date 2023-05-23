@@ -19,7 +19,8 @@ export const BlueDice: IDice = {
     symbols: [EDiceSymbol.advantage, EDiceSymbol.success]
   }],
   id: '0',
-  name: 'Blue dice'
+  name: 'Blue dice',
+  order: 0
 };
 export const BlackDice: IDice = {
   color: EDiceColor.black,
@@ -37,7 +38,8 @@ export const BlackDice: IDice = {
     symbols: [EDiceSymbol.disadvantage]
   }],
   id: '1',
-  name: 'Black dice'
+  name: 'Black dice',
+  order: 3
 };
 export const GreenDice: IDice = {
   color: EDiceColor.green,
@@ -59,7 +61,8 @@ export const GreenDice: IDice = {
     symbols: [EDiceSymbol.success, EDiceSymbol.success]
   }],
   id: '2',
-  name: 'Green dice'
+  name: 'Green dice',
+  order: 1
 };
 export const YellowDice: IDice = {
   color: EDiceColor.yellow,
@@ -89,7 +92,8 @@ export const YellowDice: IDice = {
     symbols: [EDiceSymbol.success, EDiceSymbol.success]
   }],
   id: '3',
-  name: 'Yellow dice'
+  name: 'Yellow dice',
+  order: 2
 };
 export const RedDice: IDice = {
   color: EDiceColor.red,
@@ -111,7 +115,8 @@ export const RedDice: IDice = {
     symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
   }],
   id: '4',
-  name: 'Red dice'
+  name: 'Red dice',
+  order: 4
 };
 export const PurpleDice: IDice = {
   color: EDiceColor.purple,
@@ -141,7 +146,8 @@ export const PurpleDice: IDice = {
     symbols: [EDiceSymbol.anti_critical]
   }],
   id: '5',
-  name: 'Purple dice'
+  name: 'Purple dice',
+  order: 5
 };
 export const OrangeDice: IDice = {
   color: EDiceColor.orange,
@@ -169,7 +175,8 @@ export const OrangeDice: IDice = {
     symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
   }],
   id: '6',
-  name: 'Orange dice'
+  name: 'Orange dice',
+  order: 6
 };
 
 const defaultDices: IDice[] = [
@@ -191,12 +198,11 @@ const defaultDices: IDice[] = [
 export class DiceRollComponent implements OnInit {
   results?: IFace[];
   dices: IDice[] = [];
-  defaultDices = defaultDices;
+  defaultDices = defaultDices.sort((a, b) => a.order - b.order);
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }) { }
 
   ngOnInit() {
-    (window as any).a = this;
     this.setDefaultDices();
   }
 
@@ -212,7 +218,7 @@ export class DiceRollComponent implements OnInit {
   }
 
   rollDices(): void {
-    this.results = this.getRandomFaces(this.dices);
+    this.results = this.getRandomFaces(this.dices.sort((a, b) => a.order < b.order ? -1 : 0));
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
