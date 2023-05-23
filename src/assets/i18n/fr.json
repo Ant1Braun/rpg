@@ -37,6 +37,7 @@
     "dice_roll": {
         "result": "Résultat",
         "add_dice": "Ajouter des dés",
-        "roll": "Lancer !"
+        "roll": "Lancer !",
+        "reroll": "Relancer"
     }
 }

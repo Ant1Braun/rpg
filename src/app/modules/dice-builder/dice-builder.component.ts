@@ -70,7 +70,8 @@ export class DiceBuilderComponent implements OnInit {
             color: (row as any)?.color,
             faces: (row as any)?.faces,
             id: (row as any)?.id,
-            name: (row as any)?.name + ''
+            name: (row as any)?.name + '',
+            order: (row as any)?.order
           }
         });
         this.dicesArray.clear();
