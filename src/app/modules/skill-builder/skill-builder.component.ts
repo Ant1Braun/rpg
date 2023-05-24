@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, first, takeUntil } from 'rxjs';
+import { Subject, first, take, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
 import { IDicesByLebel, ISkill } from '../../interfaces';
 import { DiceRollComponent, GreenDice, YellowDice } from '../dice-roll/dice-roll.component';
@@ -327,8 +327,12 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     if (!this.autoPex.value) {
       return;
     }
+    const closed$ = new Subject<boolean>();
+    dialogRef.backdropClick().pipe(take(1), takeUntil(closed$)).subscribe(() => dialogRef.componentInstance.closeDialog());
     dialogRef.afterClosed().pipe(first()).subscribe((rollCount: number) => {
       levelCtrl.setValue(levelCtrl.value + rollCount);
+      closed$.next(true);
+      closed$.complete();
     });
   }
 }

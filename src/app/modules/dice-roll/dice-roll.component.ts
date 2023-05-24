@@ -201,7 +201,9 @@ export class DiceRollComponent implements OnInit {
   defaultDices = defaultDices.sort((a, b) => a.order - b.order);
   rollCount = 0;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }, private dialogRef: MatDialogRef<DiceRollComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }, private dialogRef: MatDialogRef<DiceRollComponent>) {
+    this.dialogRef.disableClose = true;
+  }
 
   ngOnInit() {
     this.setDefaultDices();
@@ -242,5 +244,9 @@ export class DiceRollComponent implements OnInit {
 
   private setDefaultDices(): void {
     this.dices = [...this.data.dices];
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close(this.rollCount);
   }
 }

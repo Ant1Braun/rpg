@@ -22,7 +22,7 @@
             </div>
         </ng-template>
         <div class="d-flex around roll-btn-ctn mt-1">
-            <button [mat-dialog-close]="rollCount" class="roll-btn my-05" mat-raised-button>
+            <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
                 {{ 'dice_roll.back' | translate }}
             </button>
             <button (click)="results ? rerollDices() : rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
