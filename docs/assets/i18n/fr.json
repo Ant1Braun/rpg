@@ -18,7 +18,8 @@
             "file": "Fichier",
             "file_name": "Nom du fichier",
             "experience": "Expérience",
-            "roll_dices": "Roll dices"
+            "roll_dices": "Roll dices",
+            "auto_pex": "AutoPex"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
         "import": "Importer",
@@ -38,6 +39,7 @@
         "result": "Résultat",
         "add_dice": "Ajouter des dés",
         "roll": "Lancer !",
-        "reroll": "Relancer"
+        "reroll": "Relancer",
+        "back": "Retour"
     }
 }
