@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, first, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
 import { IDicesByLebel, ISkill } from '../../interfaces';
 import { DiceRollComponent, GreenDice, YellowDice } from '../dice-roll/dice-roll.component';
@@ -202,7 +202,8 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       skills: this.fb.array(formGroups),
-      fileName: this.fb.control('')
+      fileName: this.fb.control(''),
+      autoPex: this.fb.control(true)
     });
     this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       this.unsaved = true;
@@ -228,6 +229,14 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
 
   get fileName(): FormControl {
     return this.form?.get('fileName') as FormControl;
+  }
+
+  get autoPex(): FormControl {
+    return this.form?.get('autoPex') as FormControl;
+  }
+
+  getLevelCtrl(skillGroup: FormGroup): FormControl {
+    return skillGroup.get('level') as FormControl;
   }
 
   private getFormGroupsFromSkills(skills: ISkill[]): FormGroup[] {
@@ -307,13 +316,19 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     }))
   }
 
-  onRollDicesClicked(skillLevel: number): void {
-    const dices = defaultDicesByLevel.find(d => skillLevel <= d.max && skillLevel >= d.min)?.dices;
+  onRollDicesClicked(levelCtrl: FormControl): void {
+    const dices = defaultDicesByLevel.find(d => levelCtrl.value <= d.max && levelCtrl.value >= d.min)?.dices;
     if (!dices) {
       return;
     }
-    this.dialog.open(DiceRollComponent, {
+    const dialogRef = this.dialog.open(DiceRollComponent, {
       data: { dices }
+    });
+    if (!this.autoPex.value) {
+      return;
+    }
+    dialogRef.afterClosed().pipe(first()).subscribe((rollCount: number) => {
+      levelCtrl.setValue(levelCtrl.value + rollCount);
     });
   }
 }

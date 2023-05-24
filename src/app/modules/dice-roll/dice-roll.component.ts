@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EDiceColor, EDiceSymbol } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
 
@@ -199,8 +199,9 @@ export class DiceRollComponent implements OnInit {
   results?: IFace[];
   dices: IDice[] = [];
   defaultDices = defaultDices.sort((a, b) => a.order - b.order);
+  rollCount = 0;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }) { }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }, private dialogRef: MatDialogRef<DiceRollComponent>) { }
 
   ngOnInit() {
     this.setDefaultDices();
@@ -219,6 +220,7 @@ export class DiceRollComponent implements OnInit {
 
   rollDices(): void {
     this.results = this.getRandomFaces(this.dices.sort((a, b) => a.order < b.order ? -1 : 0));
+    this.rollCount++;
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
