@@ -8,11 +8,6 @@
                     <img class="icon" src="assets/icons/dice.png" />
                 </button>
             </div>
-            <div class="d-flex content-center roll-btn-ctn">
-                <button (click)="rollDices()" class="mt-1 roll-btn" mat-raised-button color="primary">
-                    {{ 'dice_roll.roll' | translate }}
-                </button>
-            </div>
         </ng-container>
         <ng-template #resultsTmp>
             <div class="center wrap">
@@ -25,9 +20,14 @@
                     </div>
                 </div>
             </div>
-            <button (click)="rerollDices()" mat-raised-button color="primary">
-                {{ 'dice_roll.reroll' | translate }}
-            </button>
         </ng-template>
+        <div class="d-flex around roll-btn-ctn mt-1">
+            <button [mat-dialog-close]="rollCount" class="roll-btn my-05" mat-raised-button>
+                {{ 'dice_roll.back' | translate }}
+            </button>
+            <button (click)="results ? rerollDices() : rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
+                {{ ('dice_roll.' + (results ? 're' : '') + 'roll') | translate }}
+            </button>
+        </div>
     </div>
 </div>

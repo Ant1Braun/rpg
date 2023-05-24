@@ -1,5 +1,8 @@
 <form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
-    <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
+    <div class="d-flex between">
+        <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
+        <mat-slide-toggle [formControl]="autoPex" color="primary">{{ 'skill_builder.label.auto_pex' | translate }}</mat-slide-toggle>
+    </div>
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -29,7 +32,7 @@
 
     <div class="d-flex px-05 skill-ctn" [ngClass]="{ 'mt-1': first }"
         *ngFor="let skillGroup of skillGroups; let i = index; let first = first" [formGroup]="skillGroup">
-        <ng-container *ngIf="skillGroup.get('level') as levelCtrl">
+        <ng-container *ngIf="getLevelCtrl(skillGroup) as levelCtrl">
             <mat-accordion>
                 <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
                     <mat-expansion-panel-header>
@@ -76,7 +79,7 @@
                 </mat-expansion-panel>
             </mat-accordion>
             <button mat-mini-fab class="ml-1 mb-4px theme-grey" aria-label="Roll dices"
-                (click)="onRollDicesClicked(levelCtrl.value)">
+                (click)="onRollDicesClicked(levelCtrl)">
                 <img class="icon" src="assets/icons/dice.png" />
             </button>
         </ng-container>
