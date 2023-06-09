@@ -20,6 +20,41 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <h3>Results</h3>
+                <div class="center wrap">
+                    <div  *ngIf="advantageLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(advantageLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.advantage + '.png' }}" />
+                        </div>
+                    </div>
+                    <div  *ngIf="advantageLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-advantageLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.disadvantage + '.png' }}" />
+                        </div>
+                    </div>
+                    <div  *ngIf="successLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(successLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.success + '.png' }}" />
+                        </div>
+                    </div>
+                    <div  *ngIf="successLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-successLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.fail + '.png' }}" />
+                        </div>
+                    </div>
+                    <div  *ngIf="criticalLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(criticalLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.critical + '.png' }}" />
+                        </div>
+                    </div>
+                    <div  *ngIf="criticalLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-criticalLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.anti_critical + '.png' }}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ng-template>
         <div class="d-flex around roll-btn-ctn mt-1">
             <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { flatten } from 'lodash';
 import { EDiceColor, EDiceSymbol } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
 
@@ -200,6 +201,11 @@ export class DiceRollComponent implements OnInit {
   dices: IDice[] = [];
   defaultDices = defaultDices.sort((a, b) => a.order - b.order);
   rollCount = 0;
+  advantageLength = 0;
+  successLength = 0;
+  criticalLength = 0;
+  readonly EDiceSymbol = EDiceSymbol;
+  readonly EDiceColor = EDiceColor;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }, private dialogRef: MatDialogRef<DiceRollComponent>) {
     this.dialogRef.disableClose = true;
@@ -223,6 +229,16 @@ export class DiceRollComponent implements OnInit {
   rollDices(): void {
     this.results = this.getRandomFaces(this.dices.sort((a, b) => a.order < b.order ? -1 : 0));
     this.rollCount++;
+    this.computeDelta();
+  }
+
+  computeDelta(): void {
+    this.advantageLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.advantage)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.disadvantage)?.length;
+    this.successLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.success)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.fail)?.length;
+    this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.critical)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.anti_critical)?.length;
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
@@ -250,3 +266,4 @@ export class DiceRollComponent implements OnInit {
     this.dialogRef.close(this.rollCount);
   }
 }
+
