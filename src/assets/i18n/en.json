@@ -37,7 +37,7 @@
         "export": "Export"
     },
     "dice_roll": {
-        "result": "Result",
+        "results": "Results",
         "add_dice": "Add dice",
         "roll": "Roll!",
         "reroll": "Reroll",
