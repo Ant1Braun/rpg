@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div>
-                <h3>{{ 'dice_roll.results' | translate }}</h3>
+                <h3>{{ 'dice_roll.result' | translate }}</h3>
                 <div class="center wrap">
                     <div  *ngIf="advantageLength > 0" class="center m-025 radius">
                         <div *ngFor="let i of [].constructor(advantageLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
