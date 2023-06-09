@@ -36,7 +36,7 @@
         "export": "Exporter"
     },
     "dice_roll": {
-        "result": "Résultat",
+        "results": "Résultats",
         "add_dice": "Ajouter des dés",
         "roll": "Lancer !",
         "reroll": "Relancer",
