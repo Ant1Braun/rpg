@@ -327,7 +327,8 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
       return;
     }
     const dialogRef = this.dialog.open(DiceRollComponent, {
-      data: { dices }
+      data: { dices },
+      panelClass: 'roll-dice-dialog'
     });
     if (!this.autoPex.value) {
       return;

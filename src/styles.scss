@@ -248,3 +248,11 @@ body {
 .h-50px {
     height: 50px;
 }
+
+.roll-dice-dialog {
+    border-radius: 4px;
+    overflow: hidden;
+    .mat-mdc-dialog-surface.mdc-dialog__surface {
+        background-color: lightgray !important;
+    }
+}
