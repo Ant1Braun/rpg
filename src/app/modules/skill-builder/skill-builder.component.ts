@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, first, take, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
@@ -186,6 +186,9 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
       event.returnValue = '';
     }
   }
+  readonly defaultLevel = 20;
+  readonly maxLevel = 200;
+  readonly minLevel = 0;
 
   private unsaved = false;
   private destroyed$ = new Subject<boolean>();
@@ -220,7 +223,7 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   }
 
   get experience(): number {
-    return this.skillsArray.value?.reduce((a: number, b: ISkill) => a + b.level - 20, 0);
+    return this.skillsArray.value?.reduce((a: number, b: ISkill) => a + b.level - this.defaultLevel, this.minLevel);
   }
 
   get skillGroups(): FormGroup[] {
@@ -243,7 +246,7 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     return skills.map(skill => {
       return this.fb.group({
         name: this.fb.control(skill.name),
-        level: this.fb.control(skill.level)
+        level: this.fb.control(skill.level, Validators.max(this.maxLevel))
       });
     });
   }
@@ -264,12 +267,14 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
       if (sheets.length) {
         const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
         const newSkills: ISkill[] = rows.map(row => {
+          const max = +(row as any)?.max;
+          const min = +(row as any)?.min;
           return {
-            id: (row as any)?.id + '',
-            level: +(row as any)?.level,
-            max: +(row as any)?.max ?? 100,
-            min: +(row as any)?.min ?? 0,
-            name: (row as any)?.name + ''
+            id: ''+(row as any)?.id,
+            level: +(row as any)?.level ?? this.defaultLevel,
+            max: (max > this.maxLevel ? this.maxLevel : max) ?? this.maxLevel,
+            min: (min < this.minLevel ? this.minLevel : min) ?? this.minLevel,
+            name: ''+(row as any)?.name
           }
         });
         this.skillsArray.clear();
@@ -312,7 +317,7 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   onAddNewSkillClicked(): void {
     this.skillsArray.push(this.fb.group({
       name: this.fb.control(''),
-      level: this.fb.control(20)
+      level: this.fb.control(this.defaultLevel)
     }))
   }
 
@@ -330,7 +335,14 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     const closed$ = new Subject<boolean>();
     dialogRef.backdropClick().pipe(take(1), takeUntil(closed$)).subscribe(() => dialogRef.componentInstance.closeDialog());
     dialogRef.afterClosed().pipe(first()).subscribe((rollCount: number) => {
-      levelCtrl.setValue(levelCtrl.value + rollCount);
+      const newLevel = levelCtrl.value + rollCount;
+      if (levelCtrl.value !== this.maxLevel) {
+        if (newLevel > this.maxLevel) {
+          levelCtrl.setValue(this.maxLevel);
+        } else {
+          levelCtrl.setValue(newLevel);
+        }
+      }
       closed$.next(true);
       closed$.complete();
     });
