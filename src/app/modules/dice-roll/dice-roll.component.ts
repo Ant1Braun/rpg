@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { flatten } from 'lodash';
 import { EDiceColor, EDiceSymbol } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 export const BlueDice: IDice = {
   color: EDiceColor.blue,
@@ -194,6 +195,15 @@ const defaultDices: IDice[] = [
   selector: 'app-dice-roll',
   templateUrl: './dice-roll.component.html',
   styleUrls: ['./dice-roll.component.scss'],
+  animations: [
+    trigger('diceRoll', [
+      state('default', style({ transform: 'rotate(0)', scale: 1 })),
+      state('rolling', style({ transform: 'rotate(360deg) scale(1.5)' })),
+      transition('default <=> rolling', [
+        animate('0.5s ease-in-out')
+      ])
+    ])
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiceRollComponent implements OnInit {
@@ -222,6 +232,13 @@ export class DiceRollComponent implements OnInit {
     return { [color]: true };
   }
 
+  getImgClass(length: number): string {
+    if (length > 1) {
+      return 'dice_results';
+    }
+    return 'dice_result';
+  }
+
   getDiceNumberById(id: string): number {
     return this.dices.filter(e => e.id === id).length;
   }
@@ -233,23 +250,25 @@ export class DiceRollComponent implements OnInit {
   }
 
   computeDelta(): void {
-    this.advantageLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.advantage)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.disadvantage)?.length;
-    this.successLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.success)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.fail)?.length;
-    this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.critical)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.anti_critical)?.length;
+    this.advantageLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.advantage)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.disadvantage)?.length;
+    this.successLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.success)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.fail)?.length;
+    this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.critical)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.anti_critical)?.length;
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
     return dices.map(dice => {
       const face = dice.faces[Math.floor(Math.random() * dice.faces.length)];
-      face.color = dice.color;
-      return face;
+      return {
+        ...face,
+        color: dice.color
+      };
     });
   }
 
-  addCounterDice(d: IDice): void {
+  addDice(d: IDice): void {
     this.dices.push(d);
   }
 

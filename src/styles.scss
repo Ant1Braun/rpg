@@ -66,6 +66,10 @@ body {
     justify-content: space-between;
 }
 
+.end {
+    justify-content: flex-end;
+}
+
 .content-center {
     justify-content: center;
 }
@@ -76,10 +80,6 @@ body {
 
 .bottom {
     vertical-align: bottom;
-}
-
-.end {
-    align-items: end;
 }
 
 .mb-0 {
@@ -249,9 +249,15 @@ body {
     height: 50px;
 }
 
+.s-50px {
+    height: 50px;
+    width: 50px;
+}
+
 .roll-dice-dialog {
     border-radius: 4px;
     overflow: hidden;
+
     .mat-mdc-dialog-surface.mdc-dialog__surface {
         background-color: lightgray !important;
     }

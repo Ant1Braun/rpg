@@ -1,66 +1,62 @@
 <div class="roll-ctn p-1">
     <div class="column between h-100">
-        <ng-container *ngIf="!results; else resultsTmp">
-            <div class="d-flex between wrap">
-                <button *ngFor="let d of defaultDices" [matBadge]="getDiceNumberById(d.id)"
-                    [matBadgeHidden]="getDiceNumberById(d.id) < 1" class="m-05" [ngClass]="d.color" mat-mini-fab
-                    aria-label="Add a dice" (click)="addCounterDice(d)">
-                    <img class="icon" src="assets/icons/dice.png" />
-                </button>
-            </div>
-        </ng-container>
-        <ng-template #resultsTmp>
+        <div class="d-flex between wrap">
+            <button *ngFor="let d of defaultDices" class="m-05" mat-mini-fab aria-label="Add a dice"
+                [matBadge]="getDiceNumberById(d.id)" [matBadgeHidden]="getDiceNumberById(d.id) < 1" [ngClass]="d.color"
+                (click)="addDice(d)">
+                <img class="icon" src="assets/icons/dice.png" />
+            </button>
+        </div>
+        <ng-container *ngIf="results">
             <div class="center wrap">
                 <div *ngFor="let r of results" class="center m-025 radius">
-                    <div class="center h-50px" [ngClass]="getColorClass(r.color)" *ngFor="let s of r.symbols">
-                        <img class="dice_result" src="{{ 'assets/icons/' + s + '.png' }}" />
-                    </div>
-                    <div class="center" [className]="r.color" *ngIf="!r.symbols.length">
-                        <div class="square"></div>
+                    <div class="center content-center square" [ngClass]="getColorClass(r.color)">
+                        <img *ngFor="let s of r.symbols" [ngClass]="getImgClass(r.symbols.length)"
+                            src="{{ 'assets/icons/' + s + '.png' }}" />
                     </div>
                 </div>
             </div>
             <div>
-                <h3>{{ 'dice_roll.result' | translate }}</h3>
+                <h3>{{ 'dice_roll.results' | translate }}</h3>
                 <div class="center wrap">
-                    <div  *ngIf="advantageLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(advantageLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                    <div *ngIf="advantageLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(advantageLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.advantage + '.png' }}" />
                         </div>
                     </div>
-                    <div  *ngIf="advantageLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-advantageLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                    <div *ngIf="advantageLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-advantageLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.disadvantage + '.png' }}" />
                         </div>
                     </div>
-                    <div  *ngIf="successLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(successLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                    <div *ngIf="successLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(successLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.success + '.png' }}" />
                         </div>
                     </div>
-                    <div  *ngIf="successLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-successLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                    <div *ngIf="successLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-successLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.fail + '.png' }}" />
                         </div>
                     </div>
-                    <div  *ngIf="criticalLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(criticalLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.green)">
+                    <div *ngIf="criticalLength > 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(criticalLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.critical + '.png' }}" />
                         </div>
                     </div>
-                    <div  *ngIf="criticalLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-criticalLength)" class="center h-50px" [ngClass]="getColorClass(EDiceColor.red)">
+                    <div *ngIf="criticalLength < 0" class="center m-025 radius">
+                        <div *ngFor="let i of [].constructor(-criticalLength)" class="center square">
                             <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.anti_critical + '.png' }}" />
                         </div>
                     </div>
                 </div>
             </div>
-        </ng-template>
-        <div class="d-flex around roll-btn-ctn mt-1">
+        </ng-container>
+        <div class="d-flex end roll-btn-ctn mt-1">
             <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
                 {{ 'dice_roll.back' | translate }}
             </button>
-            <button (click)="results ? rerollDices() : rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
+            <button (click)="rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
                 {{ ('dice_roll.' + (results ? 're' : '') + 'roll') | translate }}
             </button>
         </div>
