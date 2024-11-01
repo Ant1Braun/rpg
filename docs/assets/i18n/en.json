@@ -37,10 +37,15 @@
         "export": "Export"
     },
     "dice_roll": {
-        "result": "Result",
+        "results": "Results",
         "add_dice": "Add dice",
-        "roll": "Rol!",
-        "reroll": "Reroll",
-        "back": "Back"
+        "roll": "Roll!",
+        "back": "Back",
+        "advantage": "Advantage",
+        "disadvantage": "Disavantage",
+        "success": "Success",
+        "fail": "Fail",
+        "critical_success": "Critical success",
+        "critical_fail": "Critical fail"
     }
 }
