@@ -1,184 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { flatten } from 'lodash';
-import { EDiceColor, EDiceSymbol } from '../../enums';
+import { EDiceColor, EDiceSymbol, ERollState } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
+import { trigger, state, style, transition, animate, keyframes, sequence, group, animateChild, query } from '@angular/animations';
+import { BlackDice, RedDice, PurpleDice, BlueDice, GreenDice, YellowDice, OrangeDice } from './constants';
 
-export const BlueDice: IDice = {
-  color: EDiceColor.blue,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage, EDiceSymbol.success]
-  }],
-  id: '0',
-  name: 'Blue dice',
-  order: 0
-};
-export const BlackDice: IDice = {
-  color: EDiceColor.black,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }],
-  id: '1',
-  name: 'Black dice',
-  order: 3
-};
-export const GreenDice: IDice = {
-  color: EDiceColor.green,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.success]
-  }],
-  id: '2',
-  name: 'Green dice',
-  order: 1
-};
-export const YellowDice: IDice = {
-  color: EDiceColor.yellow,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.critical]
-  }, {
-    symbols: [EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.advantage, EDiceSymbol.advantage]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.success]
-  }, {
-    symbols: [EDiceSymbol.success, EDiceSymbol.success]
-  }],
-  id: '3',
-  name: 'Yellow dice',
-  order: 2
-};
-export const RedDice: IDice = {
-  color: EDiceColor.red,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
-  }],
-  id: '4',
-  name: 'Red dice',
-  order: 4
-};
-export const PurpleDice: IDice = {
-  color: EDiceColor.purple,
-  faces: [{
-    symbols: []
-  }, {
-    symbols: [EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.fail]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.fail, EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.disadvantage, EDiceSymbol.disadvantage]
-  }, {
-    symbols: [EDiceSymbol.anti_critical]
-  }],
-  id: '5',
-  name: 'Purple dice',
-  order: 5
-};
-export const OrangeDice: IDice = {
-  color: EDiceColor.orange,
-  faces: [{
-    symbols: [EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.negative, EDiceSymbol.negative]
-  }, {
-    symbols: [EDiceSymbol.positive]
-  }, {
-    symbols: [EDiceSymbol.positive]
-  }, {
-    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
-  }, {
-    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
-  }, {
-    symbols: [EDiceSymbol.positive, EDiceSymbol.positive]
-  }],
-  id: '6',
-  name: 'Orange dice',
-  order: 6
-};
 
 const defaultDices: IDice[] = [
   BlackDice,
@@ -194,25 +21,63 @@ const defaultDices: IDice[] = [
   selector: 'app-dice-roll',
   templateUrl: './dice-roll.component.html',
   styleUrls: ['./dice-roll.component.scss'],
+  animations: [
+    trigger('bounceDice', [
+      state('default', style({ transform: 'translateY(0)' })),
+      state('rolling', style({ transform: 'translateY(360deg)' })),
+      transition('default <=> rolling', [
+        group([
+          sequence([
+            style({ transform: 'translateY(0)' }),
+            animate('400ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-70px)' })),
+            animate('300ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
+            animate('200ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-35px)' })),
+            animate('150ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
+            animate('100ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-12px)' })),
+            animate('80ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' }))
+          ]),
+          query('@rotateDice', animateChild()),
+        ])
+      ])
+    ]),
+    trigger('rotateDice', [
+      state('default', style({ transform: 'rotate(0)' })),
+      state('rolling', style({ transform: 'rotate(360deg)' })),
+      transition('default <=> rolling', [
+        animate('1230ms ease-in-out')
+      ])
+    ])
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiceRollComponent implements OnInit {
-  results?: IFace[];
+  results: IFace[] = [];
   dices: IDice[] = [];
   defaultDices = defaultDices.sort((a, b) => a.order - b.order);
   rollCount = 0;
   advantageLength = 0;
   successLength = 0;
   criticalLength = 0;
+  rollState = ERollState.default;
+  roll = false;
   readonly EDiceSymbol = EDiceSymbol;
   readonly EDiceColor = EDiceColor;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] }, private dialogRef: MatDialogRef<DiceRollComponent>) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] },
+    private dialogRef: MatDialogRef<DiceRollComponent>,
+    private cdr: ChangeDetectorRef) {
     this.dialogRef.disableClose = true;
   }
 
   ngOnInit() {
     this.setDefaultDices();
+    this.results = flatten(this.dices.map(d => {
+      return {
+        symbols: [],
+        color: d.color
+      };
+    }));
   }
 
   getColorClass(color?: EDiceColor): { [key in EDiceColor]?: boolean } | undefined {
@@ -222,40 +87,56 @@ export class DiceRollComponent implements OnInit {
     return { [color]: true };
   }
 
+  getImgClass(length: number): string {
+    if (length > 1) {
+      return 'dice_results';
+    }
+    return 'dice_result';
+  }
+
   getDiceNumberById(id: string): number {
     return this.dices.filter(e => e.id === id).length;
   }
 
   rollDices(): void {
-    this.results = this.getRandomFaces(this.dices.sort((a, b) => a.order < b.order ? -1 : 0));
+    this.rollState = ERollState.rolling;
+    this.advantageLength = 0;
+    this.successLength = 0;
+    this.criticalLength = 0;
     this.rollCount++;
-    this.computeDelta();
+    setTimeout(() => {
+      this.results = this.getRandomFaces(this.dices.sort((a, b) => a.order < b.order ? -1 : 0));
+      this.rollState = ERollState.default;
+      this.computeDelta();
+      this.cdr.detectChanges();
+    }, 1230);
   }
 
   computeDelta(): void {
-    this.advantageLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.advantage)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.disadvantage)?.length;
-    this.successLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.success)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.fail)?.length;
-    this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.critical)?.length
-      - flatten(this.results?.map(r => r.symbols)).filter(s => s === EDiceSymbol.anti_critical)?.length;
+    this.advantageLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.advantage)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.disadvantage)?.length;
+    this.successLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.success)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.fail)?.length;
+    this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.critical)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.anti_critical)?.length;
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
     return dices.map(dice => {
       const face = dice.faces[Math.floor(Math.random() * dice.faces.length)];
-      face.color = dice.color;
-      return face;
+      return {
+        ...face,
+        color: dice.color
+      };
     });
   }
 
-  addCounterDice(d: IDice): void {
+  addDice(d: IDice): void {
     this.dices.push(d);
-  }
-
-  rerollDices() {
-    this.results = undefined;
-    this.setDefaultDices();
+    this.results.push({
+      symbols: [],
+      color: d.color
+    });
   }
 
   private setDefaultDices(): void {

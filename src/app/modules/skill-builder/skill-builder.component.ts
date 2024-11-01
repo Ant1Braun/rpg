@@ -3,173 +3,10 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, first, take, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
-import { IDicesByLebel, ISkill } from '../../interfaces';
-import { DiceRollComponent, GreenDice, YellowDice } from '../dice-roll/dice-roll.component';
+import { ISkill } from '../../interfaces';
+import { DiceRollComponent } from '../dice-roll/dice-roll.component';
+import { defaultDicesByLevel, defaultSkills } from './constants';
 
-const defaultSkills: ISkill[] = [
-  {
-    id: '0',
-    level: 20,
-    max: 90,
-    min: 20,
-    name: 'athletics'
-  },
-  {
-    id: '1',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'knowledge'
-  },
-  {
-    id: '2',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'perception'
-  },
-  {
-    id: '3',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'medicine'
-  },
-  {
-    id: '4',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'stealth'
-  },
-  {
-    id: '5',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'survival'
-  },
-  {
-    id: '100',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'brawl'
-  },
-  {
-    id: '101',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'gunnery'
-  },
-  {
-    id: '102',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'melee'
-  },
-  {
-    id: '103',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'light ranged'
-  },
-  {
-    id: '104',
-    max: 90,
-    min: 20,
-    level: 20,
-    name: 'heavy ranged'
-  }
-];
-const defaultDicesByLevel: IDicesByLebel[] = [{
-  min: 0,
-  max: 9,
-  dices: [GreenDice]
-}, {
-  min: 10,
-  max: 19,
-  dices: [YellowDice]
-}, {
-  min: 20,
-  max: 29,
-  dices: [GreenDice, GreenDice]
-}, {
-  min: 30,
-  max: 39,
-  dices: [GreenDice, YellowDice]
-}, {
-  min: 40,
-  max: 49,
-  dices: [YellowDice, YellowDice]
-}, {
-  min: 50,
-  max: 59,
-  dices: [GreenDice, GreenDice, GreenDice]
-}, {
-  min: 60,
-  max: 69,
-  dices: [GreenDice, GreenDice, YellowDice]
-}, {
-  min: 70,
-  max: 79,
-  dices: [GreenDice, YellowDice, YellowDice]
-}, {
-  min: 80,
-  max: 89,
-  dices: [GreenDice, GreenDice, GreenDice, GreenDice]
-}, {
-  min: 90,
-  max: 99,
-  dices: [YellowDice, YellowDice, YellowDice]
-}, {
-  min: 100,
-  max: 109,
-  dices: [GreenDice, GreenDice, GreenDice, YellowDice]
-}, {
-  min: 110,
-  max: 119,
-  dices: [GreenDice, GreenDice, YellowDice, YellowDice]
-}, {
-  min: 120,
-  max: 129,
-  dices: [GreenDice, YellowDice, YellowDice, YellowDice]
-}, {
-  min: 130,
-  max: 139,
-  dices: [GreenDice, GreenDice, GreenDice, GreenDice, GreenDice]
-}, {
-  min: 140,
-  max: 149,
-  dices: [GreenDice, YellowDice, YellowDice, YellowDice]
-}, {
-  min: 150,
-  max: 159,
-  dices: [GreenDice, GreenDice, GreenDice, GreenDice, YellowDice]
-}, {
-  min: 160,
-  max: 169,
-  dices: [YellowDice, YellowDice, YellowDice, YellowDice]
-}, {
-  min: 170,
-  max: 179,
-  dices: [GreenDice, GreenDice, GreenDice, YellowDice, YellowDice]
-}, {
-  min: 180,
-  max: 189,
-  dices: [GreenDice, GreenDice, YellowDice, YellowDice, YellowDice]
-}, {
-  min: 190,
-  max: 199,
-  dices: [GreenDice, YellowDice, YellowDice, YellowDice, YellowDice]
-}, {
-  min: 200,
-  max: 200,
-  dices: [YellowDice, YellowDice, YellowDice, YellowDice, YellowDice]
-}];
 
 @Component({
   selector: 'app-skill-builder',
@@ -270,11 +107,11 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
           const max = +(row as any)?.max;
           const min = +(row as any)?.min;
           return {
-            id: ''+(row as any)?.id,
-            level: +(row as any)?.level ?? this.defaultLevel,
+            id: '' + (row as any)?.id,
+            level: +(row as any)?.level || this.defaultLevel,
             max: (max > this.maxLevel ? this.maxLevel : max) ?? this.maxLevel,
             min: (min < this.minLevel ? this.minLevel : min) ?? this.minLevel,
-            name: ''+(row as any)?.name
+            name: '' + (row as any)?.name
           }
         });
         this.skillsArray.clear();

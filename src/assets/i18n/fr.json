@@ -36,10 +36,15 @@
         "export": "Exporter"
     },
     "dice_roll": {
-        "result": "Résultat",
+        "results": "Résultats",
         "add_dice": "Ajouter des dés",
         "roll": "Lancer !",
-        "reroll": "Lancer un nouveau jet",
-        "back": "Retour"
+        "back": "Retour",
+        "advantage": "Avantage",
+        "disadvantage": "Désavantage",
+        "success": "Réussite",
+        "fail": "Échec",
+        "critical_success": "Réussite critique",
+        "critical_fail": "Échec critique"
     }
 }

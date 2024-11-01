@@ -1,7 +1,8 @@
 <form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
     <div class="d-flex between">
         <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
-        <mat-slide-toggle [formControl]="autoPex" color="primary">{{ 'skill_builder.label.auto_pex' | translate }}</mat-slide-toggle>
+        <mat-slide-toggle [formControl]="autoPex" color="primary">{{ 'skill_builder.label.auto_pex' | translate
+            }}</mat-slide-toggle>
     </div>
     <mat-accordion>
         <mat-expansion-panel>
@@ -82,7 +83,7 @@
         </ng-container>
     </div>
 
-    <div class="d-flex center">
+    <div class="d-flex end">
         <button mat-raised-button color="primary" (click)="onAddNewSkillClicked()">
             {{ 'skill_builder.add_new_skill' | translate }}
         </button>
