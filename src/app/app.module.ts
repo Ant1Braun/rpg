@@ -24,6 +24,7 @@ import { DiceBuilderComponent } from './modules/dice-builder/dice-builder.compon
 import { DiceRollComponent } from './modules/dice-roll/dice-roll.component';
 import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.component';
 import { RoutingModule } from './routing.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { RoutingModule } from './routing.module';
     MatExpansionModule,
     MatDialogModule,
     MatBadgeModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

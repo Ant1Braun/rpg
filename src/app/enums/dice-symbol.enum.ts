@@ -6,5 +6,5 @@ export enum EDiceSymbol {
     fail = 'fail',
     negative = 'negative',
     positive = 'positive',
-    success = 'success',
+    success = 'success'
 }

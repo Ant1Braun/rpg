@@ -45,6 +45,10 @@ body {
     height: 100%;
 }
 
+.h-50 {
+    height: 50%;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -80,6 +84,10 @@ body {
 
 .bottom {
     vertical-align: bottom;
+}
+
+.m-1 {
+    margin: 1rem;
 }
 
 .mb-0 {
@@ -261,4 +269,8 @@ body {
     .mat-mdc-dialog-surface.mdc-dialog__surface {
         background-color: lightgray !important;
     }
+}
+
+.z-2 {
+    z-index: 2;
 }

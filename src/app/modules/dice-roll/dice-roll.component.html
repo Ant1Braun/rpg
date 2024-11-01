@@ -1,64 +1,71 @@
-<div class="roll-ctn p-1">
-    <div class="column between h-100">
-        <div class="d-flex between wrap">
-            <button *ngFor="let d of defaultDices" class="m-05" mat-mini-fab aria-label="Add a dice"
-                [matBadge]="getDiceNumberById(d.id)" [matBadgeHidden]="getDiceNumberById(d.id) < 1" [ngClass]="d.color"
-                (click)="addDice(d)">
-                <img class="icon" src="assets/icons/dice.png" />
-            </button>
-        </div>
-        <ng-container *ngIf="results">
+<div class="roll-ctn p-1 column between">
+    <div class="column h-100">
+        <div class="column h-50">
+            <div class="d-flex between wrap">
+                <button *ngFor="let d of defaultDices" class="m-05" mat-mini-fab aria-label="Add a dice"
+                    [matBadge]="getDiceNumberById(d.id)" [matBadgeHidden]="getDiceNumberById(d.id) < 1"
+                    [ngClass]="d.color" (click)="addDice(d)">
+                    <img class="icon" src="assets/icons/dice.png" />
+                </button>
+            </div>
             <div class="center wrap">
-                <div *ngFor="let r of results" class="center m-025 radius">
-                    <div class="center content-center square" [ngClass]="getColorClass(r.color)">
+                <div *ngFor="let r of results" class="center z-2" [@bounceDice]="rollState">
+                    <div class="center content-center square m-025 radius" [ngClass]="getColorClass(r.color)"
+                        [@rotateDice]="rollState">
                         <img *ngFor="let s of r.symbols" [ngClass]="getImgClass(r.symbols.length)"
                             src="{{ 'assets/icons/' + s + '.png' }}" />
                     </div>
                 </div>
             </div>
-            <div>
-                <h3>{{ 'dice_roll.results' | translate }}</h3>
-                <div class="center wrap">
-                    <div *ngIf="advantageLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(advantageLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.advantage + '.png' }}" />
-                        </div>
+        </div>
+        <div class="column between">
+            <h3>{{ 'dice_roll.results' | translate }}</h3>
+            <div class="center wrap">
+                <div *ngIf="advantageLength > 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(advantageLength)" class="center square"
+                        [matTooltip]="'dice_roll.advantage' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.advantage + '.png' }}" />
                     </div>
-                    <div *ngIf="advantageLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-advantageLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.disadvantage + '.png' }}" />
-                        </div>
+                </div>
+                <div *ngIf="advantageLength < 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(-advantageLength)" class="center square"
+                        [matTooltip]="'dice_roll.disadvantage' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.disadvantage + '.png' }}" />
                     </div>
-                    <div *ngIf="successLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(successLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.success + '.png' }}" />
-                        </div>
+                </div>
+                <div *ngIf="successLength > 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(successLength)" class="center square"
+                        [matTooltip]="'dice_roll.success' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.success + '.png' }}" />
                     </div>
-                    <div *ngIf="successLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-successLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.fail + '.png' }}" />
-                        </div>
+                </div>
+                <div *ngIf="successLength < 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(-successLength)" class="center square"
+                        [matTooltip]="'dice_roll.fail' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.fail + '.png' }}" />
                     </div>
-                    <div *ngIf="criticalLength > 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(criticalLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.critical + '.png' }}" />
-                        </div>
+                </div>
+                <div *ngIf="criticalLength > 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(criticalLength)" class="center square"
+                        [matTooltip]="'dice_roll.critical_success' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.critical + '.png' }}" />
                     </div>
-                    <div *ngIf="criticalLength < 0" class="center m-025 radius">
-                        <div *ngFor="let i of [].constructor(-criticalLength)" class="center square">
-                            <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.anti_critical + '.png' }}" />
-                        </div>
+                </div>
+                <div *ngIf="criticalLength < 0" class="center m-025">
+                    <div *ngFor="let i of [].constructor(-criticalLength)" class="center square"
+                        [matTooltip]="'dice_roll.critical_fail' | translate">
+                        <img class="dice_result" src="{{ 'assets/icons/' + EDiceSymbol.anti_critical + '.png' }}" />
                     </div>
                 </div>
             </div>
-        </ng-container>
-        <div class="d-flex end roll-btn-ctn mt-1">
-            <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
-                {{ 'dice_roll.back' | translate }}
-            </button>
-            <button (click)="rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
-                {{ ('dice_roll.' + (results ? 're' : '') + 'roll') | translate }}
-            </button>
         </div>
+    </div>
+    <div class="d-flex end mt-1">
+        <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
+            {{ 'dice_roll.back' | translate }}
+        </button>
+        <button (click)="rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
+            {{ 'dice_roll.roll' | translate }}
+        </button>
     </div>
 </div>

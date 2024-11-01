@@ -40,7 +40,12 @@
         "results": "Results",
         "add_dice": "Add dice",
         "roll": "Roll!",
-        "reroll": "Reroll!",
-        "back": "Back"
+        "back": "Back",
+        "advantage": "Advantage",
+        "disadvantage": "Disavantage",
+        "success": "Success",
+        "fail": "Fail",
+        "critical_success": "Critical success",
+        "critical_fail": "Critical fail"
     }
 }

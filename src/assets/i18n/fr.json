@@ -39,7 +39,12 @@
         "results": "Résultats",
         "add_dice": "Ajouter des dés",
         "roll": "Lancer !",
-        "reroll": "Relancer !",
-        "back": "Retour"
+        "back": "Retour",
+        "advantage": "Avantage",
+        "disadvantage": "Désavantage",
+        "success": "Réussite",
+        "fail": "Échec",
+        "critical_success": "Réussite critique",
+        "critical_fail": "Échec critique"
     }
 }
