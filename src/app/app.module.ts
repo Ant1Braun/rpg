@@ -25,7 +25,7 @@ import { DiceRollComponent } from './modules/dice-roll/dice-roll.component';
 import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.component';
 import { RoutingModule } from './routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -62,7 +62,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDialogModule,
     MatBadgeModule,
     MatSlideToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

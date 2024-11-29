@@ -6,77 +6,88 @@ export const defaultSkills: ISkill[] = [{
     level: 20,
     max: 90,
     min: 20,
-    name: 'athletics'
+    name: 'athletics',
+    characteristic: 'brawn'
 },
 {
     id: '1',
     max: 90,
     min: 20,
     level: 20,
-    name: 'knowledge'
+    name: 'knowledge',
+    characteristic: 'intellect'
 },
 {
     id: '2',
     max: 90,
     min: 20,
     level: 20,
-    name: 'perception'
+    name: 'perception',
+    characteristic: 'cunning'
 },
 {
     id: '3',
     max: 90,
     min: 20,
     level: 20,
-    name: 'medicine'
+    name: 'medicine',
+    characteristic: 'intellect'
 },
 {
     id: '4',
     max: 90,
     min: 20,
     level: 20,
-    name: 'stealth'
+    name: 'stealth',
+    characteristic: 'agility'
 },
 {
     id: '5',
     max: 90,
     min: 20,
     level: 20,
-    name: 'survival'
+    name: 'survival',
+    characteristic: 'cunning'
 },
 {
     id: '100',
     max: 90,
     min: 20,
     level: 20,
-    name: 'brawl'
+    name: 'brawl',
+    characteristic: 'brawn'
 },
 {
     id: '101',
     max: 90,
     min: 20,
     level: 20,
-    name: 'gunnery'
+    name: 'gunnery',
+    characteristic: 'agility'
 },
 {
     id: '102',
     max: 90,
     min: 20,
     level: 20,
-    name: 'melee'
+    name: 'melee',
+    characteristic: 'brawn'
 },
 {
     id: '103',
     max: 90,
     min: 20,
     level: 20,
-    name: 'light ranged'
+    name: 'light ranged',
+    characteristic: 'agility'
 },
 {
     id: '104',
     max: 90,
     min: 20,
     level: 20,
-    name: 'heavy ranged'
+    name: 'heavy ranged',
+    characteristic: 'agility'
 }
 ];
 

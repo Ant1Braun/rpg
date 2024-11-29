@@ -4,4 +4,5 @@ export interface ISkill {
     level: number;
     min: number;
     max: number;
+    characteristic: string;
 }

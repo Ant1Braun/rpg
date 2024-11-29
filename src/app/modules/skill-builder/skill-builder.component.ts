@@ -6,6 +6,7 @@ import { read, utils, writeFile } from 'xlsx';
 import { ISkill } from '../../interfaces';
 import { DiceRollComponent } from '../dice-roll/dice-roll.component';
 import { defaultDicesByLevel, defaultSkills } from './constants';
+import { ECharacteristic } from 'src/app/enums';
 
 
 @Component({
@@ -24,8 +25,9 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     }
   }
   readonly defaultLevel = 20;
-  readonly maxLevel = 200;
+  readonly maxLevel = 100;
   readonly minLevel = 0;
+  readonly characteristics = Object.values(ECharacteristic);
 
   private unsaved = false;
   private destroyed$ = new Subject<boolean>();
@@ -38,10 +40,8 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.skillList = defaultSkills;
-    const formGroups = this.getFormGroupsFromSkills(defaultSkills);
-
     this.form = this.fb.group({
-      skills: this.fb.array(formGroups),
+      skills: this.fb.array(this.getFormGroupsFromSkills(defaultSkills)),
       fileName: this.fb.control(''),
       autoPex: this.fb.control(true)
     });
@@ -82,8 +82,9 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   private getFormGroupsFromSkills(skills: ISkill[]): FormGroup[] {
     return skills.map(skill => {
       return this.fb.group({
-        name: this.fb.control(skill.name),
-        level: this.fb.control(skill.level, Validators.max(this.maxLevel))
+        name: this.fb.control(skill.name, Validators.required),
+        level: this.fb.control(skill.level, Validators.max(this.maxLevel)),
+        characteristic: this.fb.control(skill.characteristic, Validators.required)
       });
     });
   }
@@ -111,7 +112,8 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
             level: +(row as any)?.level || this.defaultLevel,
             max: (max > this.maxLevel ? this.maxLevel : max) ?? this.maxLevel,
             min: (min < this.minLevel ? this.minLevel : min) ?? this.minLevel,
-            name: '' + (row as any)?.name
+            name: '' + (row as any)?.name,
+            characteristic: (row as any)?.characteristic
           }
         });
         this.skillsArray.clear();
@@ -125,7 +127,8 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   onExportClicked(): void {
     const headings = [[
       'name',
-      'level'
+      'level',
+      'characteristic'
     ]];
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
@@ -141,11 +144,11 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     this.skillsArray.removeAt(index)
   }
 
-  onChangeLevelClicked(control: AbstractControl, change: number): void {
+  onChangeLevelClicked(control: FormControl, change: number): void {
     if (!control) {
       return;
     }
-    control.setValue(control.value + change);
+    control.patchValue(control.value + change);
     if (control.pristine) {
       control.markAsDirty();
     }
@@ -155,7 +158,11 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     this.skillsArray.push(this.fb.group({
       name: this.fb.control(''),
       level: this.fb.control(this.defaultLevel)
-    }))
+    }));
+  }
+
+  onShowCharacteristicsClicked(): void {
+
   }
 
   onRollDicesClicked(levelCtrl: FormControl): void {
