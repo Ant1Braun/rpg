@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { flatten } from 'lodash';
 import { EDiceColor, EDiceSymbol, ERollState } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
-import { trigger, state, style, transition, animate, keyframes, sequence, group, animateChild, query } from '@angular/animations';
+import { trigger, state, style, transition, animate, sequence, group, animateChild, query } from '@angular/animations';
 import { BlackDice, RedDice, PurpleDice, BlueDice, GreenDice, YellowDice, OrangeDice } from './constants';
 
 
@@ -66,7 +66,8 @@ export class DiceRollComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { dices: IDice[] },
     private dialogRef: MatDialogRef<DiceRollComponent>,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef
+  ) {
     this.dialogRef.disableClose = true;
   }
 

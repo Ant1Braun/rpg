@@ -1,15 +1,16 @@
 <form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
     <div class="d-flex between">
-        <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
-        <mat-slide-toggle [formControl]="autoPex" color="primary">{{ 'skill_builder.label.auto_pex' | translate
-            }}</mat-slide-toggle>
+        <h2 class="c-white mb-0">{{ 'title.skill-builder' | translate }}</h2>
+        <mat-slide-toggle [formControl]="autoPex" color="primary">
+            {{ 'skill_builder.label.auto_pex' | translate }}
+        </mat-slide-toggle>
     </div>
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ 'skill_builder.label.file' | translate }} <ng-container
-                        *ngIf="form.get('fileName')?.value as fileName">{{ fileName }}</ng-container>
+                    {{ 'skill_builder.label.file' | translate }}
+                    <ng-container *ngIf="form.get('fileName')?.value as fileName">{{ fileName }}</ng-container>
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
@@ -18,7 +19,6 @@
                     <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
                     <input matInput type="text" [formControlName]="'fileName'">
                 </mat-form-field>
-                <!-- <h2>{{ 'skill_builder.label.experience' | translate }} {{ experience }}</h2> -->
                 <button class="mb-05" mat-raised-button (click)="fileInput.click()">
                     {{ 'skill_builder.import' | translate }}
                 </button>
@@ -33,57 +33,67 @@
 
     <div class="d-flex px-05 skill-ctn" [ngClass]="{ 'mt-1': first }"
         *ngFor="let skillGroup of skillGroups; let i = index; let first = first" [formGroup]="skillGroup">
-        <ng-container *ngIf="getLevelCtrl(skillGroup) as levelCtrl">
-            <mat-accordion>
-                <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <div class="row d-flex between">
-                                <span>{{ nameCtrl.value }}</span>
-                                <span>{{ skillGroup.get('level')?.value }}</span>
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-form-field class="skill-name mr-1 row">
-                        <mat-label>{{ 'skill_builder.label.name' | translate }}</mat-label>
-                        <input matInput type="text" [formControlName]="'name'">
-                        <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
-                            <mat-icon>close</mat-icon>
-                        </button>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle *ngIf="skillGroup.get('name') as nameCtrl">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="row d-flex between">
+                            <span>{{ nameCtrl.value }}</span>
+                            <span>{{ skillGroup.get('level')?.value }}</span>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field class="skill-name mr-1 row">
+                    <mat-label>{{ 'skill_builder.label.name' | translate }}</mat-label>
+                    <input matInput type="text" [formControlName]="'name'">
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="nameCtrl.setValue('')">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div class="row d-flex between">
+                    <mat-form-field class="skill-level mr-1" appearance="fill">
+                        <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
+                        <input matInput type="number" step="1" [formControlName]="'level'" [max]="maxSkillLevel"
+                            [min]="minSkillLevel">
                     </mat-form-field>
-                    <div class="row d-flex between">
-                        <mat-form-field class="skill-level mr-1" appearance="fill">
-                            <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
-                            <input matInput type="number" [formControlName]="'level'" [max]="maxLevel" [min]="minLevel">
-                        </mat-form-field>
-                        <div class="false-form-padding center">
-                            <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
-                                (click)="onChangeLevelClicked(levelCtrl, -1)">
-                                <mat-icon>remove_circle</mat-icon>
-                            </button>
-                        </div>
-                        <div class="false-form-padding center">
-                            <button mat-mini-fab color="accent" aria-label="Add level"
-                                (click)="onChangeLevelClicked(levelCtrl, 1)">
-                                <mat-icon>add_circle</mat-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row d-flex">
-                        <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
-                            <mat-icon>delete</mat-icon>
+                    <div class="false-form-padding center">
+                        <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
+                            (click)="onChangeLevelClicked(getSkillLevelCtrl(skillGroup), -1)">
+                            <mat-icon>remove_circle</mat-icon>
                         </button>
                     </div>
-                </mat-expansion-panel>
-            </mat-accordion>
-            <button mat-mini-fab class="ml-1 mb-4px theme-grey" aria-label="Roll dices"
-                (click)="onRollDicesClicked(levelCtrl)">
-                <img class="icon" src="assets/icons/dice.png" />
-            </button>
-        </ng-container>
+                    <div class="false-form-padding center">
+                        <button mat-mini-fab color="accent" aria-label="Add level"
+                            (click)="onChangeLevelClicked(getSkillLevelCtrl(skillGroup), 1)">
+                            <mat-icon>add_circle</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="row d-flex between">
+                    <mat-form-field>
+                        <mat-label>{{ 'skill_builder.label.characteristic' | translate }}</mat-label>
+                        <mat-select [formControlName]="'characteristic'">
+                            <mat-option *ngFor="let characteristic of characteristics" [value]="characteristic">
+                                {{ characteristic }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-mini-fab color="warn" aria-label="Remove level" (click)="onDeleteClicked(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <button mat-mini-fab class="ml-1 mb-4px theme-grey" aria-label="Roll dices"
+            (click)="onRollDicesClicked(skillGroup)">
+            <img class="icon" src="assets/icons/dice.png" />
+        </button>
     </div>
 
-    <div class="d-flex end">
+    <div class="d-flex between">
+        <button mat-raised-button color="primary" (click)="onShowCharacteristicsClicked()">
+            {{ 'skill_builder.show_characteristics' | translate }}
+        </button>
         <button mat-raised-button color="primary" (click)="onAddNewSkillClicked()">
             {{ 'skill_builder.add_new_skill' | translate }}
         </button>

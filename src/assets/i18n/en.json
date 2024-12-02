@@ -2,11 +2,12 @@
     "rpg": {
         "helper": "RPG helper"
     },
-    "menu": {
+    "title": {
         "skill-builder": "Skill builder",
         "character-sheet": "Character sheet",
         "skill-tree-builder": "Skill tree builder",
-        "dice-builder": "Dice builder"
+        "dice-builder": "Dice builder",
+        "characteristic-builder": "Characteristic builder"
     },
     "language": {
         "en": "English",
@@ -20,9 +21,11 @@
             "file_name": "File name",
             "experience": "Experience",
             "roll_dices": "Roll dices",
-            "auto_pex": "AutoPex"
+            "auto_pex": "AutoPex",
+            "characteristic": "Characteristic"
         },
         "add_new_skill": "Add a new skill",
+        "show_characteristics": "Show characteristics",
         "import": "Import",
         "export": "Export"
     },
@@ -47,5 +50,15 @@
         "fail": "Fail",
         "critical_success": "Critical success",
         "critical_fail": "Critical fail"
+    },
+    "enum": {
+        "characteristic": {
+            "brawn": "Brawn",
+            "agility": "Agility",
+            "intellect": "Intellect",
+            "cunning": "Cunning",
+            "willpower": "Willpower",
+            "presence": "Presence"
+        }
     }
 }
