@@ -2,10 +2,11 @@
     "rpg": {
         "helper": "RPG helper"
     },
-    "menu": {
+    "title": {
         "skill-builder": "Constructeur de talent",
         "character-sheet": "Feuille de caractère",
-        "skill-tree-builder": "Constructeur d'abre de talent"
+        "skill-tree-builder": "Constructeur d'abre de talent",
+        "characteristic-builder": "Constructeur de caractéristique"
     },
     "language": {
         "en": "English",
@@ -19,9 +20,11 @@
             "file_name": "Nom du fichier",
             "experience": "Expérience",
             "roll_dices": "Roll dices",
-            "auto_pex": "AutoPex"
+            "auto_pex": "AutoPex",
+            "characteristic": "Caractéristique"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",
+        "show_characteristics": "Montrer les caractéristiques",
         "import": "Importer",
         "export": "Exporter"
     },
@@ -46,5 +49,15 @@
         "fail": "Échec",
         "critical_success": "Réussite critique",
         "critical_fail": "Échec critique"
+    },
+    "enum": {
+        "characteristic": {
+            "brawn": "Vigueur",
+            "agility": "Agilité",
+            "intellect": "Intelligence",
+            "cunning": "Ruse",
+            "willpower": "Volonté",
+            "presence": "Présence"
+        }
     }
 }
