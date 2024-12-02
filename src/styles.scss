@@ -262,7 +262,7 @@ body {
     width: 50px;
 }
 
-.roll-dice-dialog {
+.modal {
     border-radius: 4px;
     overflow: hidden;
 
@@ -273,4 +273,17 @@ body {
 
 .z-2 {
     z-index: 2;
+}
+
+.modal-ctn {
+    width: calc(80vw - 2rem);
+    height: 80vh;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.relative {
+    position: relative;
 }

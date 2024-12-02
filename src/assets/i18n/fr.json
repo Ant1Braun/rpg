@@ -2,10 +2,11 @@
     "rpg": {
         "helper": "RPG helper"
     },
-    "menu": {
+    "title": {
         "skill-builder": "Constructeur de talent",
         "character-sheet": "Feuille de caractère",
-        "skill-tree-builder": "Constructeur d'abre de talent"
+        "skill-tree-builder": "Constructeur d'abre de talent",
+        "characteristic-builder": "Constructeur de caractéristique"
     },
     "language": {
         "en": "English",

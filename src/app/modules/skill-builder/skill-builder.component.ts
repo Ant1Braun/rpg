@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, first, take, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
-import { ISkill } from '../../interfaces';
+import { ICharacteristic, IDice, ISkill } from '../../interfaces';
 import { DiceRollComponent } from '../dice-roll/dice-roll.component';
-import { defaultDicesByLevel, defaultSkills } from './constants';
+import { defaultSkills } from './constants';
 import { ECharacteristic } from 'src/app/enums';
+import { GreenDice, YellowDice } from '../dice-roll/constants';
+import { CharacteristicBuilderComponent } from '../characteristic-builder/characteristic-builder.component';
+import { uniqBy } from 'lodash';
 
 
 @Component({
@@ -16,7 +19,7 @@ import { ECharacteristic } from 'src/app/enums';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkillBuilderComponent implements OnInit, OnDestroy {
-  skillList?: ISkill[];
+  characteristicList?: ICharacteristic[];
   form?: FormGroup;
   @HostListener('window:beforeunload', ['event'])
   do(event: any) {
@@ -24,9 +27,12 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
       event.returnValue = '';
     }
   }
-  readonly defaultLevel = 20;
-  readonly maxLevel = 100;
-  readonly minLevel = 0;
+  readonly defaultSkillLevel = 0;
+  readonly maxSkillLevel = 100;
+  readonly minSkillLevel = 0;
+  readonly defaultCharacteristicLevel = 1
+  readonly maxCharacteristicLevel = 5;
+  readonly minCharacteristicLevel = 1
   readonly characteristics = Object.values(ECharacteristic);
 
   private unsaved = false;
@@ -39,15 +45,22 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.skillList = defaultSkills;
+    const characteristicList = this.characteristics.map(characteristic => ({
+      name: characteristic,
+      level: this.defaultCharacteristicLevel,
+      max: this.maxCharacteristicLevel,
+      min: this.minCharacteristicLevel
+    }));
+    this.characteristicList = characteristicList;
     this.form = this.fb.group({
       skills: this.fb.array(this.getFormGroupsFromSkills(defaultSkills)),
       fileName: this.fb.control(''),
-      autoPex: this.fb.control(true)
+      autoPex: this.fb.control(true),
+      characteristics: this.fb.array(this.getFormGroupsFromCharacteristics(characteristicList))
     });
     this.form.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(() => {
       this.unsaved = true;
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -59,8 +72,12 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     return (this.form?.get('skills') as FormArray);
   }
 
+  get characteristicsArray(): FormArray {
+    return (this.form?.get('characteristics') as FormArray);
+  }
+
   get experience(): number {
-    return this.skillsArray.value?.reduce((a: number, b: ISkill) => a + b.level - this.defaultLevel, this.minLevel);
+    return this.skillsArray.value?.reduce((a: number, b: ISkill) => a + b.level - this.defaultSkillLevel, this.minSkillLevel);
   }
 
   get skillGroups(): FormGroup[] {
@@ -75,16 +92,37 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     return this.form?.get('autoPex') as FormControl;
   }
 
-  getLevelCtrl(skillGroup: FormGroup): FormControl {
+  getSkillLevelCtrl(skillGroup: FormGroup): FormControl {
     return skillGroup.get('level') as FormControl;
+  }
+
+  getSkillCharacteristicCtrl(skillGroup: FormGroup): FormControl {
+    return skillGroup.get('characteristic') as FormControl;
+  }
+
+  private getGroup(name: string, level: number, characteristic: ECharacteristic | null): FormGroup {
+    return this.fb.group({
+      name: this.fb.control(name),
+      level: this.fb.control(level),
+      characteristic: this.fb.control(characteristic)
+    });
   }
 
   private getFormGroupsFromSkills(skills: ISkill[]): FormGroup[] {
     return skills.map(skill => {
       return this.fb.group({
         name: this.fb.control(skill.name, Validators.required),
-        level: this.fb.control(skill.level, Validators.max(this.maxLevel)),
+        level: this.fb.control(skill.level, [Validators.required, Validators.max(this.maxSkillLevel)]),
         characteristic: this.fb.control(skill.characteristic, Validators.required)
+      });
+    });
+  }
+
+  private getFormGroupsFromCharacteristics(characteristicList: ICharacteristic[]): FormGroup[] {
+    return characteristicList.map(c => {
+      return this.fb.group({
+        name: this.fb.control(c.name, Validators.required),
+        level: this.fb.control(c.level, Validators.max(this.maxSkillLevel)),
       });
     });
   }
@@ -104,36 +142,63 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
 
       if (sheets.length) {
         const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
-        const newSkills: ISkill[] = rows.map(row => {
-          const max = +(row as any)?.max;
-          const min = +(row as any)?.min;
-          return {
-            id: '' + (row as any)?.id,
-            level: +(row as any)?.level || this.defaultLevel,
-            max: (max > this.maxLevel ? this.maxLevel : max) ?? this.maxLevel,
-            min: (min < this.minLevel ? this.minLevel : min) ?? this.minLevel,
-            name: '' + (row as any)?.name,
-            characteristic: (row as any)?.characteristic
-          }
-        });
-        this.skillsArray.clear();
-        this.getFormGroupsFromSkills(newSkills).forEach(group => this.skillsArray.push(group));
+        this.setSkills(rows);
+        this.setCharacteristics(rows);
         this.cdr.detectChanges();
       }
     }
     reader.readAsArrayBuffer(file);
   }
 
+  private setSkills(rows: unknown[]): void {
+    const newSkills: ISkill[] = rows.map(row => {
+      const max = +(row as any)?.max;
+      const min = +(row as any)?.min;
+      return {
+        characteristic: (row as any)?.characteristic,
+        level: +(row as any)?.level || this.defaultSkillLevel,
+        max: (max > this.maxSkillLevel ? this.maxSkillLevel : max) ?? this.maxSkillLevel,
+        min: (min < this.minSkillLevel ? this.minSkillLevel : min) ?? this.minSkillLevel,
+        name: '' + (row as any)?.name,
+      }
+    });
+    this.skillsArray.clear();
+    this.getFormGroupsFromSkills(newSkills).forEach(group => this.skillsArray.push(group));
+  }
+
+  private setCharacteristics(rows: unknown[]): void {
+    const newCharacteristics: ICharacteristic[] = uniqBy(rows.map(row => {
+      const max = +(row as any)?.max;
+      const min = +(row as any)?.min;
+      return {
+        name: (row as any)?.characteristic,
+        level: +(row as any)?.characteristicLevel || this.defaultCharacteristicLevel,
+        max: (max > this.maxCharacteristicLevel ? this.maxCharacteristicLevel : max) ?? this.maxCharacteristicLevel,
+        min: (min < this.minCharacteristicLevel ? this.minCharacteristicLevel : min) ?? this.minCharacteristicLevel,
+      }
+    }), 'name');
+    this.characteristicsArray.clear();
+    this.getFormGroupsFromCharacteristics(newCharacteristics).forEach(group => this.characteristicsArray.push(group));
+  }
+
   onExportClicked(): void {
     const headings = [[
       'name',
       'level',
-      'characteristic'
+      'characteristic',
+      'characteristicLevel'
     ]];
+
     const wb = utils.book_new();
     const ws: any = utils.json_to_sheet([]);
     utils.sheet_add_aoa(ws, headings);
-    utils.sheet_add_json(ws, this.skillsArray.value, { origin: 'A2', skipHeader: true });
+    const data = this.skillsArray.value.map((s: any, i: number) => {
+      return {
+        ...s,
+        characteristicLevel: this.characteristicsArray.controls.find(g => g.get('name')?.value === s.characteristic)?.get('level')?.value
+      };
+    });
+    utils.sheet_add_json(ws, data, { origin: 'A2', skipHeader: true });
     utils.book_append_sheet(wb, ws, 'Report');
     writeFile(wb, `${this.fileName.value || 'skills'}.xlsx`);
     this.unsaved = false;
@@ -155,24 +220,20 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
   }
 
   onAddNewSkillClicked(): void {
-    this.skillsArray.push(this.fb.group({
-      name: this.fb.control(''),
-      level: this.fb.control(this.defaultLevel)
-    }));
+    this.skillsArray.push(this.getGroup('', 0, null));
   }
 
-  onShowCharacteristicsClicked(): void {
-
-  }
-
-  onRollDicesClicked(levelCtrl: FormControl): void {
-    const dices = defaultDicesByLevel.find(d => levelCtrl.value <= d.max && levelCtrl.value >= d.min)?.dices;
+  onRollDicesClicked(skillGroup: FormGroup): void {
+    const skillLevelCtrl = this.getSkillLevelCtrl(skillGroup);
+    const skillCharacteristic = this.getSkillCharacteristicCtrl(skillGroup).value;
+    const characteristicLevel = this.characteristicsArray.controls.find(group => group.get('name')?.value === skillCharacteristic)?.get('level')?.value;
+    const dices = this.getDices(skillLevelCtrl.value, characteristicLevel);
     if (!dices) {
       return;
     }
     const dialogRef = this.dialog.open(DiceRollComponent, {
       data: { dices },
-      panelClass: 'roll-dice-dialog'
+      panelClass: 'modal'
     });
     if (!this.autoPex.value) {
       return;
@@ -180,16 +241,38 @@ export class SkillBuilderComponent implements OnInit, OnDestroy {
     const closed$ = new Subject<boolean>();
     dialogRef.backdropClick().pipe(take(1), takeUntil(closed$)).subscribe(() => dialogRef.componentInstance.closeDialog());
     dialogRef.afterClosed().pipe(first()).subscribe((rollCount: number) => {
-      const newLevel = levelCtrl.value + rollCount;
-      if (levelCtrl.value !== this.maxLevel) {
-        if (newLevel > this.maxLevel) {
-          levelCtrl.setValue(this.maxLevel);
+      const newLevel = skillLevelCtrl.value + rollCount;
+      if (skillLevelCtrl.value !== this.maxSkillLevel) {
+        if (newLevel > this.maxSkillLevel) {
+          skillLevelCtrl.setValue(this.maxSkillLevel);
         } else {
-          levelCtrl.setValue(newLevel);
+          skillLevelCtrl.setValue(newLevel);
         }
       }
       closed$.next(true);
       closed$.complete();
     });
+  }
+
+  private getDices(skillLevel: number, characteristicLevel: number): IDice[] {
+    if (skillLevel === 0) {
+      return new Array(characteristicLevel).fill(GreenDice);
+    }
+    const diceNumberBySkill = Math.floor(skillLevel / 20);
+    const yellowDices = Math.min(diceNumberBySkill, characteristicLevel);
+    const greenDices = Math.abs(diceNumberBySkill - characteristicLevel);
+    return new Array(yellowDices).fill(YellowDice).concat(new Array(greenDices).fill(GreenDice));
+  }
+
+  onShowCharacteristicsClicked(): void {
+    const dialogRef = this.dialog.open(CharacteristicBuilderComponent, {
+      data: {
+        max: this.maxCharacteristicLevel,
+        min: this.minCharacteristicLevel,
+        groups: this.characteristicsArray.controls,
+      },
+      panelClass: 'modal'
+    });
+    dialogRef.backdropClick().pipe(take(1)).subscribe(() => dialogRef.componentInstance.closeDialog());
   }
 }

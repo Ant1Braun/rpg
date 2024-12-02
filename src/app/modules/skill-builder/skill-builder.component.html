@@ -1,6 +1,6 @@
 <form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
     <div class="d-flex between">
-        <h2 class="c-white mb-0">{{ 'menu.skill-builder' | translate }}</h2>
+        <h2 class="c-white mb-0">{{ 'title.skill-builder' | translate }}</h2>
         <mat-slide-toggle [formControl]="autoPex" color="primary">
             {{ 'skill_builder.label.auto_pex' | translate }}
         </mat-slide-toggle>
@@ -53,17 +53,18 @@
                 <div class="row d-flex between">
                     <mat-form-field class="skill-level mr-1" appearance="fill">
                         <mat-label>{{ 'skill_builder.label.level' | translate }}</mat-label>
-                        <input matInput type="number" [formControlName]="'level'" [max]="maxLevel" [min]="minLevel">
+                        <input matInput type="number" step="1" [formControlName]="'level'" [max]="maxSkillLevel"
+                            [min]="minSkillLevel">
                     </mat-form-field>
                     <div class="false-form-padding center">
                         <button class="mr-1" mat-mini-fab color="primary" aria-label="Remove level"
-                            (click)="onChangeLevelClicked(getLevelCtrl(skillGroup), -1)">
+                            (click)="onChangeLevelClicked(getSkillLevelCtrl(skillGroup), -1)">
                             <mat-icon>remove_circle</mat-icon>
                         </button>
                     </div>
                     <div class="false-form-padding center">
                         <button mat-mini-fab color="accent" aria-label="Add level"
-                            (click)="onChangeLevelClicked(getLevelCtrl(skillGroup), 1)">
+                            (click)="onChangeLevelClicked(getSkillLevelCtrl(skillGroup), 1)">
                             <mat-icon>add_circle</mat-icon>
                         </button>
                     </div>
@@ -84,7 +85,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <button mat-mini-fab class="ml-1 mb-4px theme-grey" aria-label="Roll dices"
-            (click)="onRollDicesClicked(getLevelCtrl(skillGroup))">
+            (click)="onRollDicesClicked(skillGroup)">
             <img class="icon" src="assets/icons/dice.png" />
         </button>
     </div>

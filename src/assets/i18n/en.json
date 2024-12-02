@@ -2,11 +2,12 @@
     "rpg": {
         "helper": "RPG helper"
     },
-    "menu": {
+    "title": {
         "skill-builder": "Skill builder",
         "character-sheet": "Character sheet",
         "skill-tree-builder": "Skill tree builder",
-        "dice-builder": "Dice builder"
+        "dice-builder": "Dice builder",
+        "characteristic-builder": "Characteristic builder"
     },
     "language": {
         "en": "English",

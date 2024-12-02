@@ -1,0 +1,27 @@
+.inner-spinner-number {
+    width: 72px;
+    position: absolute;
+    top: 6px;
+    left: 22px;
+
+    ::ng-deep {
+        .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+            background-color: transparent;
+
+            .mdc-line-ripple,
+            .mat-mdc-form-field-focus-overlay {
+                display: none;
+            }
+        }
+
+        .mat-mdc-input-element {
+            color: #424242;
+            font-size: 42px;
+        }
+    }
+}
+
+.characteristic-label {
+    color: #424242;
+    font-size: 42px;
+}

@@ -26,14 +26,20 @@ import { SkillBuilderComponent } from './modules/skill-builder/skill-builder.com
 import { RoutingModule } from './routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { CharacteristicBuilderComponent } from './modules/characteristic-builder/characteristic-builder.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InputNumber } from './directives/input-number';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    CharacteristicBuilderComponent,
     CharacterSheetComponent,
-    SkillBuilderComponent,
+    DiceBuilderComponent,
     DiceRollComponent,
-    DiceBuilderComponent
+    SkillBuilderComponent,
+    InputNumber
   ],
   imports: [
     RoutingModule,
@@ -63,7 +69,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatBadgeModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

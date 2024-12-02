@@ -1,9 +1,8 @@
 import { ECharacteristic } from '../enums';
 
-export interface ISkill {
-    name: string;
+export interface ICharacteristic {
+    name: ECharacteristic;
     level: number;
     min: number;
     max: number;
-    characteristic: ECharacteristic;
 }
