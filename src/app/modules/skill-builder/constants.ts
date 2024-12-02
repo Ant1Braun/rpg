@@ -170,3 +170,4 @@ export const defaultSkills: ISkill[] = [{
     name: 'vigilance',
 }
 ];
+
