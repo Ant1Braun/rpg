@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { merge, Subject, takeUntil, tap } from 'rxjs';
-import { isNil } from 'lodash';
 
 @Component({
   selector: 'app-characteristic-builder',
