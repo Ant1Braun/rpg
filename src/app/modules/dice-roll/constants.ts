@@ -3,6 +3,7 @@ import { IDice } from '../../interfaces';
 
 export const BlueDice: IDice = {
     color: EDiceColor.blue,
+    defaultSymbol: EDiceSymbol.advantage,
     faces: [{
         symbols: []
     }, {
@@ -20,8 +21,9 @@ export const BlueDice: IDice = {
     name: 'Blue dice',
     order: 0
 };
-export const BlackDice: IDice = {
-    color: EDiceColor.black,
+export const WhiteDice: IDice = {
+    color: EDiceColor.white,
+    defaultSymbol: EDiceSymbol.disadvantage,
     faces: [{
         symbols: []
     }, {
@@ -36,10 +38,11 @@ export const BlackDice: IDice = {
         symbols: [EDiceSymbol.disadvantage]
     }],
     id: '1',
-    name: 'Black dice',
+    name: 'White dice',
     order: 3
 };
 export const GreenDice: IDice = {
+    defaultSymbol: EDiceSymbol.success,
     color: EDiceColor.green,
     faces: [{
         symbols: []
@@ -64,6 +67,7 @@ export const GreenDice: IDice = {
 };
 export const YellowDice: IDice = {
     color: EDiceColor.yellow,
+    defaultSymbol: EDiceSymbol.critical,
     faces: [{
         symbols: []
     }, {
@@ -95,6 +99,7 @@ export const YellowDice: IDice = {
 };
 export const RedDice: IDice = {
     color: EDiceColor.red,
+    defaultSymbol: EDiceSymbol.fail,
     faces: [{
         symbols: []
     }, {
@@ -118,6 +123,7 @@ export const RedDice: IDice = {
 };
 export const PurpleDice: IDice = {
     color: EDiceColor.purple,
+    defaultSymbol: EDiceSymbol.anti_critical,
     faces: [{
         symbols: []
     }, {
@@ -149,6 +155,7 @@ export const PurpleDice: IDice = {
 };
 export const OrangeDice: IDice = {
     color: EDiceColor.orange,
+    defaultSymbol: EDiceSymbol.positive,
     faces: [{
         symbols: [EDiceSymbol.negative]
     }, {

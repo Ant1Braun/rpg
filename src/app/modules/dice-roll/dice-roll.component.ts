@@ -4,11 +4,11 @@ import { flatten } from 'lodash';
 import { EDiceColor, EDiceSymbol, ERollState } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
 import { trigger, state, style, transition, animate, sequence, group, animateChild, query } from '@angular/animations';
-import { BlackDice, RedDice, PurpleDice, BlueDice, GreenDice, YellowDice, OrangeDice } from './constants';
+import { WhiteDice, RedDice, PurpleDice, BlueDice, GreenDice, YellowDice, OrangeDice } from './constants';
 
 
 const defaultDices: IDice[] = [
-  BlackDice,
+  WhiteDice,
   RedDice,
   PurpleDice,
   BlueDice,
@@ -58,6 +58,7 @@ export class DiceRollComponent implements OnInit {
   advantageLength = 0;
   successLength = 0;
   criticalLength = 0;
+  positiveLength = 0;
   rollState = ERollState.default;
   roll = false;
   readonly EDiceSymbol = EDiceSymbol;
@@ -120,6 +121,8 @@ export class DiceRollComponent implements OnInit {
       - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.fail)?.length;
     this.criticalLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.critical)?.length
       - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.anti_critical)?.length;
+    this.positiveLength = flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.positive)?.length
+      - flatten(this.results?.map(r => r.symbols)).filter((s: EDiceSymbol) => s === EDiceSymbol.negative)?.length;
   }
 
   private getRandomFaces(dices: IDice[]): IFace[] {
