@@ -2,6 +2,7 @@ import { EDiceColor, EDiceSymbol } from "../enums";
 
 export interface IDice {
     color?: EDiceColor;
+    defaultSymbol: EDiceSymbol;
     faces: IFace[];
     id: string;
     name: string;

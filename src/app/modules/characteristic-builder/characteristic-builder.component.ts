@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 import { merge, Subject, takeUntil, tap } from 'rxjs';
+import { isNil } from 'lodash';
 
 @Component({
   selector: 'app-characteristic-builder',
@@ -30,11 +31,14 @@ export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
     this.nameCtrls = this.data.groups.map(g => g.get('name') as FormControl);
     merge(...this.levelCtrls.map(ctrl => ctrl.valueChanges.pipe(
       tap(value => {
-        if (value > this.data.max) {
-          ctrl.patchValue(this.data.max);
-        }
-        if (value < this.data.min) {
-          ctrl.patchValue(this.data.min);
+        const strValue = value + '';
+        const lastDigit = +(strValue[strValue.length - 1]);
+        if (lastDigit < this.data.min) {
+          ctrl.patchValue(this.data.min, { emitEvent: false });
+        } else if (lastDigit > this.data.max) {
+          ctrl.patchValue(this.data.max, { emitEvent: false });
+        } else {
+          ctrl.patchValue(lastDigit, { emitEvent: false });
         }
       }),
       takeUntil(this.destroyed$)
@@ -47,7 +51,6 @@ export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
   }
 
   getLevelCtrl(group: FormGroup): FormControl {
-    console.log('eaz')
     return group.get('level') as FormControl;
   }
 

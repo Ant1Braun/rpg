@@ -69,6 +69,7 @@ export class DiceBuilderComponent implements OnInit {
           return {
             color: (row as any)?.color,
             faces: (row as any)?.faces,
+            defaultSymbol: (row as any)?.defaultSymbol,
             id: (row as any)?.id,
             name: (row as any)?.name + '',
             order: (row as any)?.order

@@ -7,7 +7,7 @@
                     <mat-progress-spinner [color]="'primary'" [mode]="'determinate'" [value]="levelCtrl.value * 20">
                     </mat-progress-spinner>
                     <mat-form-field class="inner-spinner-number" appearance="fill">
-                        <input matInput type="number" [formControl]="levelCtrl" inputNumber step="1" [max]="data.max"
+                        <input matInput type="number" [formControl]="levelCtrl" step="1" [max]="data.max"
                             [min]="data.min">
                     </mat-form-field>
                 </div>
