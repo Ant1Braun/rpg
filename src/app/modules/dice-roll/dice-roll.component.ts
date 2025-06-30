@@ -18,37 +18,38 @@ const defaultDices: IDice[] = [
 ];
 
 @Component({
-  selector: 'app-dice-roll',
-  templateUrl: './dice-roll.component.html',
-  styleUrls: ['./dice-roll.component.scss'],
-  animations: [
-    trigger('bounceDice', [
-      state('default', style({ transform: 'translateY(0)' })),
-      state('rolling', style({ transform: 'translateY(360deg)' })),
-      transition('default <=> rolling', [
-        group([
-          sequence([
-            style({ transform: 'translateY(0)' }),
-            animate('400ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-70px)' })),
-            animate('300ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
-            animate('200ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-35px)' })),
-            animate('150ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
-            animate('100ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-12px)' })),
-            animate('80ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' }))
-          ]),
-          query('@rotateDice', animateChild()),
+    selector: 'app-dice-roll',
+    templateUrl: './dice-roll.component.html',
+    styleUrls: ['./dice-roll.component.scss'],
+    animations: [
+        trigger('bounceDice', [
+            state('default', style({ transform: 'translateY(0)' })),
+            state('rolling', style({ transform: 'translateY(360deg)' })),
+            transition('default <=> rolling', [
+                group([
+                    sequence([
+                        style({ transform: 'translateY(0)' }),
+                        animate('400ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-70px)' })),
+                        animate('300ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
+                        animate('200ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-35px)' })),
+                        animate('150ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' })),
+                        animate('100ms cubic-bezier(0,0,0,1)', style({ transform: 'translateY(-12px)' })),
+                        animate('80ms cubic-bezier(1,0,1,1)', style({ transform: 'translateY(0)' }))
+                    ]),
+                    query('@rotateDice', animateChild()),
+                ])
+            ])
+        ]),
+        trigger('rotateDice', [
+            state('default', style({ transform: 'rotate(0)' })),
+            state('rolling', style({ transform: 'rotate(360deg)' })),
+            transition('default <=> rolling', [
+                animate('1230ms ease-in-out')
+            ])
         ])
-      ])
-    ]),
-    trigger('rotateDice', [
-      state('default', style({ transform: 'rotate(0)' })),
-      state('rolling', style({ transform: 'rotate(360deg)' })),
-      transition('default <=> rolling', [
-        animate('1230ms ease-in-out')
-      ])
-    ])
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DiceRollComponent implements OnInit {
   results: IFace[] = [];

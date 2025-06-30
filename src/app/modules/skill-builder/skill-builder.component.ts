@@ -13,10 +13,11 @@ import { uniqBy } from 'lodash';
 
 
 @Component({
-  selector: 'app-skill-builder',
-  templateUrl: './skill-builder.component.html',
-  styleUrls: ['./skill-builder.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-skill-builder',
+    templateUrl: './skill-builder.component.html',
+    styleUrls: ['./skill-builder.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SkillBuilderComponent implements OnInit, OnDestroy {
   characteristicList?: ICharacteristic[];

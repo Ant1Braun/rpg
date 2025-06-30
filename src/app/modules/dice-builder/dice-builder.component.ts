@@ -7,10 +7,11 @@ const defaultDices: IDice[] = [
 ];
 
 @Component({
-  selector: 'app-dice-builder',
-  templateUrl: './dice-builder.component.html',
-  styleUrls: ['./dice-builder.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-dice-builder',
+    templateUrl: './dice-builder.component.html',
+    styleUrls: ['./dice-builder.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class DiceBuilderComponent implements OnInit {
   diceList?: IDice[];

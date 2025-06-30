@@ -1,7 +1,8 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
-    selector: '[inputNumber]'
+    selector: '[inputNumber]',
+    standalone: false
 })
 export class InputNumber {
     @Input() max!: number;
