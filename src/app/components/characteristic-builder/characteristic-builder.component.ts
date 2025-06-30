@@ -1,14 +1,28 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { merge, Subject, takeUntil, tap } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
 
 @Component({
     selector: 'app-characteristic-builder',
     templateUrl: './characteristic-builder.component.html',
     styleUrls: ['./characteristic-builder.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      TranslatePipe,
+      MatProgressSpinnerModule,
+      MatFormFieldModule,
+      MatButtonModule,
+      MatInput
+    ]
 })
 export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
   levelCtrls?: FormControl[];

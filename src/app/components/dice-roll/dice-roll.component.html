@@ -3,7 +3,7 @@
         <div class="column">
             <div class="column">
                 <div class="d-flex between wrap">
-                    <button *ngFor="let d of defaultDices" class="m-05" mat-mini-fab aria-label="Add a dice"
+                    <button *ngFor="let d of defaultDices" class="m-05" matMiniFab aria-label="Add a dice"
                         [matBadge]="getDiceNumberById(d.id)" [matBadgeHidden]="getDiceNumberById(d.id) < 1"
                         [ngClass]="d.color" (click)="addDice(d)">
                         <img class="icon" src="{{ 'assets/icons/' + d.defaultSymbol + '.png' }}" />
@@ -74,10 +74,10 @@
             </div>
         </div>
         <div class="d-flex end mt-1">
-            <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
+            <button (click)="closeDialog()" class="roll-btn my-05" matButton="filled">
                 {{ 'dice_roll.back' | translate }}
             </button>
-            <button (click)="rollDices()" class="roll-btn my-05" mat-raised-button color="primary">
+            <button (click)="rollDices()" class="roll-btn my-05" matButton="filled" color="primary">
                 {{ 'dice_roll.roll' | translate }}
             </button>
         </div>
