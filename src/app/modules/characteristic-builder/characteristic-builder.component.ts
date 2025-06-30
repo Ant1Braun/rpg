@@ -4,10 +4,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { merge, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-characteristic-builder',
-  templateUrl: './characteristic-builder.component.html',
-  styleUrls: ['./characteristic-builder.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-characteristic-builder',
+    templateUrl: './characteristic-builder.component.html',
+    styleUrls: ['./characteristic-builder.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
   levelCtrls?: FormControl[];
