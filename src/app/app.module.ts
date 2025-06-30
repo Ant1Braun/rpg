@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,50 +31,43 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InputNumber } from './directives/input-number';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    CharacteristicBuilderComponent,
-    CharacterSheetComponent,
-    DiceBuilderComponent,
-    DiceRollComponent,
-    SkillBuilderComponent,
-    InputNumber
-  ],
-  imports: [
-    RoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    // Material icon list: https://jossef.github.io/material-design-icons-iconfont/
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSliderModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatBadgeModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatSelectModule,
-    MatProgressSpinnerModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        CharacteristicBuilderComponent,
+        CharacterSheetComponent,
+        DiceBuilderComponent,
+        DiceRollComponent,
+        SkillBuilderComponent,
+        InputNumber
+    ],
+    bootstrap: [AppComponent], imports: [RoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        // Material icon list: https://jossef.github.io/material-design-icons-iconfont/
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSliderModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatDialogModule,
+        MatBadgeModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatSelectModule,
+        MatProgressSpinnerModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
