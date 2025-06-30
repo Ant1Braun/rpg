@@ -1,7 +1,7 @@
 <form *ngIf="form" [formGroup]="form" class="p-05 max-w-500 m-a">
     <div class="d-flex between">
         <h2 class="c-white mb-0">{{ 'title.skill-builder' | translate }}</h2>
-        <mat-slide-toggle [formControl]="autoPex" color="primary">
+        <mat-slide-toggle *ngIf="autoPex" [formControl]="autoPex" color="primary">
             {{ 'skill_builder.label.auto_pex' | translate }}
         </mat-slide-toggle>
     </div>
@@ -17,13 +17,13 @@
             <div class="flex-ctn between">
                 <mat-form-field appearance="fill">
                     <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
-                    <input matInput type="text" [formControlName]="'fileName'">
+                    <input matInput type="text" [formControl]="fileName">
                 </mat-form-field>
-                <button class="mb-05" mat-raised-button (click)="fileInput.click()">
+                <!-- <button class="mb-05" mat-raised-button (click)="fileInput.click()">
                     {{ 'skill_builder.import' | translate }}
-                </button>
-                <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </button> -->
+                <!-- <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"> -->
 
                 <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
             </div>
@@ -91,10 +91,10 @@
     </div>
 
     <div class="d-flex between">
-        <button mat-raised-button color="primary" (click)="onShowCharacteristicsClicked()">
+        <button matButton="filled" color="primary" (click)="onShowCharacteristicsClicked()">
             {{ 'skill_builder.show_characteristics' | translate }}
         </button>
-        <button mat-raised-button color="primary" (click)="onAddNewSkillClicked()">
+        <button matButton="filled" color="primary" (click)="onAddNewSkillClicked()">
             {{ 'skill_builder.add_new_skill' | translate }}
         </button>
     </div>

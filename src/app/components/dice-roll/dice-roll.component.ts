@@ -5,6 +5,11 @@ import { EDiceColor, EDiceSymbol, ERollState } from '../../enums';
 import { IDice, IFace } from '../../interfaces';
 import { trigger, state, style, transition, animate, sequence, group, animateChild, query } from '@angular/animations';
 import { WhiteDice, RedDice, PurpleDice, BlueDice, GreenDice, YellowDice, OrangeDice } from './constants';
+import { MatBadge } from '@angular/material/badge';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 
 const defaultDices: IDice[] = [
@@ -49,7 +54,13 @@ const defaultDices: IDice[] = [
         ])
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [
+      CommonModule,
+      TranslatePipe,
+      MatBadge,
+      MatTooltip,
+      MatButtonModule
+    ]
 })
 export class DiceRollComponent implements OnInit {
   results: IFace[] = [];

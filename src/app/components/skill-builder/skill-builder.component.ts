@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, first, take, takeUntil } from 'rxjs';
 import { read, utils, writeFile } from 'xlsx';
@@ -10,6 +10,15 @@ import { ECharacteristic } from 'src/app/enums';
 import { GreenDice, YellowDice } from '../dice-roll/constants';
 import { CharacteristicBuilderComponent } from '../characteristic-builder/characteristic-builder.component';
 import { uniqBy } from 'lodash';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
@@ -17,7 +26,20 @@ import { uniqBy } from 'lodash';
     templateUrl: './skill-builder.component.html',
     styleUrls: ['./skill-builder.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      TranslatePipe,
+      MatExpansionModule,
+      MatFormFieldModule,
+      MatIcon,
+      MatSelect,
+      MatInputModule,
+      FormsModule,
+      MatSelectModule,
+      MatSlideToggleModule,
+      MatButtonModule
+    ]
 })
 export class SkillBuilderComponent implements OnInit, OnDestroy {
   characteristicList?: ICharacteristic[];

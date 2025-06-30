@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from "@angular/material/icon";
+import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from '@angular/platform-browser';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ELanguage } from './enums';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { SkillBuilderComponent } from './components/skill-builder/skill-builder.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+    templateUrl: './app.html',
+    styleUrls: ['./app.scss'],
+    imports: [
+      MatToolbarModule,
+      TranslatePipe,
+      MatMenuModule,
+      MatIconModule,
+      SkillBuilderComponent,
+      MatButtonModule
+    ]
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
   ELanguage = ELanguage;
 
   constructor(

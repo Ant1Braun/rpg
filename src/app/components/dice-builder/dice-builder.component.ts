@@ -1,7 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { read, utils, writeFile } from 'xlsx';
 import { IDice } from '../../interfaces';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 const defaultDices: IDice[] = [
 ];
@@ -11,7 +17,15 @@ const defaultDices: IDice[] = [
     templateUrl: './dice-builder.component.html',
     styleUrls: ['./dice-builder.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      TranslatePipe,
+      MatExpansionModule,
+      MatFormFieldModule,
+      MatIcon,
+      MatButtonModule
+    ]
 })
 export class DiceBuilderComponent implements OnInit {
   diceList?: IDice[];
