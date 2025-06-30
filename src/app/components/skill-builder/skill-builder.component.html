@@ -19,11 +19,11 @@
                     <mat-label>{{ 'skill_builder.label.file_name' | translate }}</mat-label>
                     <input matInput type="text" [formControl]="fileName">
                 </mat-form-field>
-                <!-- <button class="mb-05" mat-raised-button (click)="fileInput.click()">
+                <button class="mb-05" mat-raised-button (click)="fileInput.click()">
                     {{ 'skill_builder.import' | translate }}
-                </button> -->
-                <!-- <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"> -->
+                </button>
+                <input hidden (change)="onFileSelected($event)" #fileInput required type="file" id="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 
                 <button mat-raised-button (click)="onExportClicked()">{{ 'skill_builder.export' | translate }}</button>
             </div>
