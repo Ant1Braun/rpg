@@ -19,8 +19,7 @@
             "file": "Fichier",
             "file_name": "Nom du fichier",
             "experience": "Expérience",
-            "roll_dices": "Roll dices",
-            "auto_pex": "AutoPex",
+            "auto_pex": "Gagner de l'expérience auto.",
             "characteristic": "Caractéristique"
         },
         "add_new_skill": "Ajouter une nouvelle compétence",

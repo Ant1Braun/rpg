@@ -27,7 +27,7 @@ import { MatInput } from '@angular/material/input';
 export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
   levelCtrls?: FormControl[];
   nameCtrls?: FormControl[];
-  private destroyed$ = new Subject<boolean>();
+  private destroyed$ = new Subject<void>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
@@ -60,7 +60,7 @@ export class CharacteristicBuilderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next(true);
+    this.destroyed$.next();
     this.destroyed$.complete();
   }
 
