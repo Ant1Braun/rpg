@@ -25,7 +25,6 @@ const defaultDices: IDice[] = [
 @Component({
     selector: 'app-dice-roll',
     templateUrl: './dice-roll.component.html',
-    styleUrls: ['./dice-roll.component.scss'],
     animations: [
         trigger('bounceDice', [
             state('default', style({ transform: 'translateY(0)' })),
@@ -99,13 +98,6 @@ export class DiceRollComponent implements OnInit {
       return;
     }
     return { [color]: true };
-  }
-
-  getImgClass(length: number): string {
-    if (length > 1) {
-      return 'dice_results';
-    }
-    return 'dice_result';
   }
 
   getDiceNumberById(id: string): number {

@@ -10,114 +10,9 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.dark-background {
-    background-color: #303030;
-}
-
-.bg-light-gray {
-    background-color: lightgray;
-}
-
-.d-flex {
-    display: flex;
-}
-
 @media (max-width: 800px) {
     .flex-ctn {
         flex-direction: column;
-    }
-}
-
-.icon {
-    width: 26px;
-    padding-top: 4px;
-}
-
-.h-100 {
-    height: 100%;
-}
-
-.h-50 {
-    height: 50%;
-}
-
-.w-100 {
-    width: 100%;
-}
-
-
-.column {
-    display: flex;
-    flex-direction: column;
-}
-
-.around {
-    justify-content: space-around;
-}
-
-.between {
-    justify-content: space-between;
-}
-
-.end {
-    justify-content: flex-end;
-}
-
-.content-center {
-    justify-content: center;
-}
-
-.wrap {
-    flex-wrap: wrap;
-}
-
-.bottom {
-    vertical-align: bottom;
-}
-
-.center {
-    display: flex;
-    align-items: center;
-}
-
-.wrap {
-    flex-wrap: wrap;
-}
-
-.false-form-padding {
-    padding-bottom: 22px;
-}
-
-.full-min-height {
-    min-height: calc(100vh - 64px);
-}
-
-.bg-grey {
-    background-color: #303030;
-}
-
-.upward {
-    .mat-expansion-panel {
-        display: flex !important;
-        flex-direction: column;
-    }
-
-    .mat-expansion-panel-header {
-        order: 2;
-    }
-
-    .mat-expansion-panel-body {
-        padding: 16px 24px 0;
-    }
-}
-
-.full-accordion-title-width {
-    .mat-content.mat-content-hide-toggle {
-        margin-right: 0;
-    }
-
-    .mat-expansion-panel-header-title {
-        margin-right: 0;
     }
 }
 
@@ -157,49 +52,8 @@ body {
     background-color: #bdb10b !important;
 }
 
-.border-b {
-    border-bottom: solid;
-}
-
-.border-t {
-    border-top: solid;
-}
-
-.border-r {
-    border-right: solid;
-}
-
-.h-50px {
-    height: 50px;
-}
-
-.s-50px {
-    height: 50px;
-    width: 50px;
-}
-
 .modal {
-    border-radius: 4px;
-    overflow: hidden;
-
     .mat-mdc-dialog-surface.mdc-dialog__surface {
         background-color: lightgray !important;
     }
-}
-
-.z-2 {
-    z-index: 2;
-}
-
-.modal-ctn {
-    width: calc(80vw - 2rem);
-    height: 80vh;
-}
-
-.absolute {
-    position: absolute;
-}
-
-.relative {
-    position: relative;
 }
