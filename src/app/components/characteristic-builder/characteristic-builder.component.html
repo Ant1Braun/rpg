@@ -1,24 +1,23 @@
-<div class="modal-ctn p-1 column between">
-    <div class="column h-100">
-        <h2 class="mb-0">{{ 'title.characteristic-builder' | translate }}</h2>
-        <div class="column between h-100">
-            <div *ngFor="let group of data.groups; let i = index" class="d-flex">
-                <div class="d-flex relative" [formGroup]="group" *ngIf="levelCtrls?.[i] as levelCtrl">
+<div class="h-[90vh] p-4 flex flex-col justify-between">
+    <div class="flex flex-col h-full">
+        <h2>{{ 'title.characteristics' | translate }}</h2>
+        <div class="flex flex-col justify-between h-full">
+            <div *ngFor="let group of data.groups; let i = index" class="flex">
+                <div class="flex relative" [formGroup]="group" *ngIf="levelCtrls?.[i] as levelCtrl">
                     <mat-progress-spinner [color]="'primary'" [mode]="'determinate'" [value]="levelCtrl.value * 20">
                     </mat-progress-spinner>
                     <mat-form-field class="inner-spinner-number" appearance="fill">
-                        <input matInput type="number" [formControl]="levelCtrl" step="1" [max]="data.max"
-                            [min]="data.min">
+                        <input matInput type="number" [formControl]="levelCtrl" step="1" [max]="data.max" [min]="data.min">
                     </mat-form-field>
                 </div>
-                <div class="d-flex center ml-1 characteristic-label">
+                <div class="flex items-center ml-1 characteristic-label">
                     {{ 'enum.characteristic.' + nameCtrls?.[i]?.value | translate }}
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex end mt-1">
-        <button (click)="closeDialog()" class="roll-btn my-05" mat-raised-button>
+    <div class="flex justify-end mt-1">
+        <button (click)="closeDialog()" mat-raised-button>
             {{ 'dice_roll.back' | translate }}
         </button>
     </div>

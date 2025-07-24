@@ -11,7 +11,6 @@ import {MatButtonModule} from '@angular/material/button';
 @Component({
     selector: 'app-root',
     templateUrl: './app.html',
-    styleUrls: ['./app.scss'],
     imports: [
       MatToolbarModule,
       TranslatePipe,
